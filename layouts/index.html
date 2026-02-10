@@ -12,16 +12,12 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.3-4.3"></path>
             </svg>
-            <input type="search" id="home-search" class="search-input" placeholder="{{ i18n "search_placeholder" |
-                default "Search blogs & projects..." }}" autocomplete="off" aria-label="{{ i18n "search" |
-                default "Search" }}" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list" />
-            <kbd class="search-shortcut" aria-label="{{ i18n "search_shortcut" |
-                default "Press Ctrl+K or Cmd+K to search" }}">
+            <input type="search" id="home-search" class="search-input" placeholder="{{ i18n "search_placeholder" | default "Search blogs & projects..." }}" autocomplete="off" aria-label="{{ i18n "search" | default "Search" }}" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list" />
+            <kbd class="search-shortcut" aria-label="{{ i18n "search_shortcut" | default "Press Ctrl+K or Cmd+K to search" }}">
                 <span aria-hidden="true">Ctrl+K</span>
             </kbd>
         </div>
-        <div id="search-results" class="search-results" role="listbox" aria-label="{{ i18n "search_results" |
-            default "Search results" }}"></div>
+        <div id="search-results" class="search-results" role="listbox" aria-label="{{ i18n "search_results" | default "Search results" }}"></div>
     </div>
 </section>
 {{ end }}
@@ -50,7 +46,7 @@
         {{ $ctaType := site.Params.home.heroCTA | default "projects" }}
 
         {{ if eq $ctaType "projects" }}
-        <a href="{{ " /projects/" | relLangURL }}" class="btn btn--primary">
+        <a href="{{ "/projects/" | relLangURL }}" class="btn btn--primary">
             {{ i18n "view_projects" | default "View My Work" }}
             {{ partial "icons/arrow-right.html" }}
         </a>
@@ -71,7 +67,7 @@
         {{ end }}
 
 
-        <a href="{{ " /about/" | relLangURL }}" class="btn btn--secondary">
+        <a href="{{ "/about/" | relLangURL }}" class="btn btn--secondary">
             {{ i18n "about_me" | default "About Me" }}
         </a>
     </div>
@@ -93,7 +89,7 @@
 <section class="home-section">
     <header class="section-header">
         <h2 class="section-title">{{ i18n "featured_projects" | default "Featured Projects" }}</h2>
-        <a href="{{ " /projects/" | relLangURL }}" class="section-link">
+        <a href="{{ "/projects/" | relLangURL }}" class="section-link">
             {{ i18n "view_all" | default "View All" }}
             {{ partial "icons/arrow-right.html" }}
         </a>
@@ -115,7 +111,7 @@
 <section class="home-section">
     <header class="section-header">
         <h2 class="section-title">{{ i18n "latest_posts" | default "Latest Posts" }}</h2>
-        <a href="{{ " /posts/" | relLangURL }}" class="section-link">
+        <a href="{{ "/posts/" | relLangURL }}" class="section-link">
             {{ i18n "view_all" | default "View All" }}
             {{ partial "icons/arrow-right.html" }}
         </a>

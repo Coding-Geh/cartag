@@ -1,10 +1,10 @@
-<aside class="sidebar" aria-label="{{ i18n "site_navigation" | default "Site navigation" }}" id="sidebar">
+<aside class="sidebar" aria-label="{{ i18n " site_navigation" | default "Site navigation" }}" id="sidebar">
     <div class="sidebar-profile">
         {{ $avatarURL := partial "site-avatar-url.html" . }}
         {{ if $avatarURL }}
         {{ $zoom := site.Params.avatarZoom | default 100 }}
         <div class="sidebar-avatar-wrap" style="--avatar-zoom: {{ $zoom }};">
-            <img src="{{ $avatarURL }}" alt="{{  i18n "profile_picture" | default "Profile picture of" }} {{ site.Title
+            <img src="{{ $avatarURL }}" alt="{{  i18n " profile_picture" | default "Profile picture of" }} {{ site.Title
                 | htmlEscape }}" class="sidebar-avatar" width="100" height="100" loading="eager" />
         </div>
         {{ end }}
@@ -12,7 +12,7 @@
         <p class="sidebar-tagline">{{ site.Params.description | htmlEscape }}</p>
     </div>
 
-    <nav class="sidebar-nav" aria-label="{{ i18n "main_navigation" | default "Main navigation" }}">
+    <nav class="sidebar-nav" aria-label="{{ i18n " main_navigation" | default "Main navigation" }}">
         <ul class="nav-list" role="list">
             {{ $path := .RelPermalink }}
             {{ $isAboutPage := hasPrefix $path "/about" | or (hasPrefix $path "/en/about") | or (hasPrefix $path
@@ -25,7 +25,7 @@
 
 
             <li class="nav-item">
-                <a href="{{ " /" | relLangURL }}" class="nav-link {{ if $isHomePage }}is-active{{ end }}" {{ if
+                <a href="{{ "/" | relLangURL }}" class="nav-link {{ if $isHomePage }}is-active{{ end }}" {{ if
                     $isHomePage }}aria-current="page" {{ end }}>
                     <span class="nav-icon" aria-hidden="true">{{ partial "icons/home.html" }}</span>
                     <span>{{ i18n "nav_home" | default "Home" }}</span>
@@ -34,7 +34,7 @@
 
             {{ if site.Params.sections.about | default true }}
             <li class="nav-item">
-                <a href="{{ " /about/" | relLangURL }}" class="nav-link {{ if $isAboutPage }}is-active{{ end }}">
+                <a href="{{ "/about/" | relLangURL }}" class="nav-link {{ if $isAboutPage }}is-active{{ end }}">
                     {{ partial "icons/user.html" }}
                     <span>{{ i18n "nav_about" | default "About" }}</span>
                 </a>
@@ -43,7 +43,7 @@
 
             {{ if site.Params.sections.projects | default true }}
             <li class="nav-item">
-                <a href="{{ " /projects/" | relLangURL }}" class="nav-link {{ if $isProjectsPage }}is-active{{ end }}">
+                <a href="{{ "/projects/" | relLangURL }}" class="nav-link {{ if $isProjectsPage }}is-active{{ end }}">
                     {{ partial "icons/folder.html" }}
                     <span>{{ i18n "nav_projects" | default "Projects" }}</span>
                 </a>
@@ -52,7 +52,7 @@
 
             {{ if site.Params.sections.blog | default true }}
             <li class="nav-item">
-                <a href="{{ " /posts/" | relLangURL }}" class="nav-link {{ if $isPostsPage }}is-active{{ end }}">
+                <a href="{{ "/posts/" | relLangURL }}" class="nav-link {{ if $isPostsPage }}is-active{{ end }}">
                     {{ partial "icons/edit.html" }}
                     <span>{{ i18n "nav_blog" | default "Blog" }}</span>
                 </a>
@@ -66,7 +66,7 @@
             {{ if gt (len site.Languages) 1 }}
             <div class="lang-dropdown" data-lang-dropdown>
                 <button type="button" class="lang-dropdown__trigger" aria-expanded="false" aria-haspopup="true"
-                    aria-label="{{ i18n "language" | default "Language" }}" data-lang-trigger>
+                    aria-label="{{ i18n " language" | default "Language" }}" data-lang-trigger>
                     <span class="lang-dropdown__current">{{ site.Language.LanguageName }}</span>
                 </button>
                 <ul class="lang-dropdown__list" role="menu" hidden>
@@ -103,7 +103,7 @@
             {{ end }}
 
             {{ if site.Params.colorScheme.toggle | default true }}
-            <button class="theme-toggle" type="button" data-theme-toggle aria-label="{{ i18n "toggle_theme" |
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="{{ i18n " toggle_theme" |
                 default "Toggle theme" }}" aria-pressed="false">
                 <span class="icon-sun" aria-hidden="true">{{ partial "icons/sun.html" }}</span>
                 <span class="icon-moon" aria-hidden="true">{{ partial "icons/moon.html" }}</span>
@@ -119,7 +119,7 @@
             {{ with .Site.Home.OutputFormats.Get "RSS" }}
             <li>
                 <a href="{{ .Permalink }}" class="social-link" target="_blank" rel="noopener noreferrer"
-                    aria-label="{{ i18n "rss_feed" | default "RSS Feed" }}">
+                    aria-label="{{ i18n " rss_feed" | default "RSS Feed" }}">
                     {{ partial "icons/rss.html" }}
                     <span class="sr-only">{{ i18n "rss_feed" | default "RSS Feed" }}</span>
                 </a>
@@ -152,8 +152,7 @@
             {{ end }}
             {{ with .email }}
             <li>
-                <a href="mailto:{{ . }}" class="social-link" aria-label="{{  i18n "send_email" | default "Send email"
-                    }}">
+                <a href="mailto:{{ . }}" class="social-link" aria-label="{{ i18n "send_email" | default "Send email" }}">
                     {{ partial "icons/mail.html" }}
                     <span class="sr-only">{{ i18n "send_email" | default "Send email" }}</span>
                 </a>

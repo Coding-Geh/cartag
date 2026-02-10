@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{- $config := partial "config-defaults.html" . -}}
 {{ if site.Params.home.showSearch | default true }}
-<section class="home-search" aria-label="{{ i18n "search" | default "Search" }}">
+<section class="home-search">
     <div class="search-container" data-search-debounce="{{ site.Params.search.debounce | default 150 }}"
         data-search-results-limit="{{ site.Params.search.resultsLimit | default 8 }}" data-search-index-url="{{ "/index.json" | relLangURL }}">
         <div class="search-input-wrapper">
@@ -50,7 +50,7 @@
         {{ $ctaType := site.Params.home.heroCTA | default "projects" }}
 
         {{ if eq $ctaType "projects" }}
-        <a href="{{ "/projects/" | relLangURL }}" class="btn btn--primary">
+        <a href="{{ " /projects/" | relLangURL }}" class="btn btn--primary">
             {{ i18n "view_projects" | default "View My Work" }}
             {{ partial "icons/arrow-right.html" }}
         </a>
@@ -71,7 +71,7 @@
         {{ end }}
 
 
-        <a href="{{ "/about/" | relLangURL }}" class="btn btn--secondary">
+        <a href="{{ " /about/" | relLangURL }}" class="btn btn--secondary">
             {{ i18n "about_me" | default "About Me" }}
         </a>
     </div>
@@ -93,7 +93,7 @@
 <section class="home-section">
     <header class="section-header">
         <h2 class="section-title">{{ i18n "featured_projects" | default "Featured Projects" }}</h2>
-        <a href="{{ "/projects/" | relLangURL }}" class="section-link">
+        <a href="{{ " /projects/" | relLangURL }}" class="section-link">
             {{ i18n "view_all" | default "View All" }}
             {{ partial "icons/arrow-right.html" }}
         </a>
@@ -115,7 +115,7 @@
 <section class="home-section">
     <header class="section-header">
         <h2 class="section-title">{{ i18n "latest_posts" | default "Latest Posts" }}</h2>
-        <a href="{{ "/posts/" | relLangURL }}" class="section-link">
+        <a href="{{ " /posts/" | relLangURL }}" class="section-link">
             {{ i18n "view_all" | default "View All" }}
             {{ partial "icons/arrow-right.html" }}
         </a>
@@ -125,7 +125,7 @@
         <a href="{{ .RelPermalink }}" class="post-item">
             <span class="post-item__title">{{ .Title | htmlEscape }}</span>
             <span class="post-item__meta">
-                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+                <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
                 <span class="post-item__dot">·</span>
                 <span>{{ .ReadingTime }} {{ i18n "min_read" | default "min read" }}</span>
             </span>

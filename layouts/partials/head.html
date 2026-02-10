@@ -71,11 +71,13 @@
 {{- $fontUrl := printf "https://fonts.googleapis.com/css2?family=%s:wght@%s&display=%s" $fontFamily (delimit
 $fontWeights ";") $fontDisplay -}}
 {{- if $useGoogleFonts }}
-<link href="{{ $fontUrl }}" rel="stylesheet" />
+<link rel="preload" href="{{ $fontUrl }}" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+    <link href="{{ $fontUrl }}" rel="stylesheet" />
+</noscript>
 {{- end }}
 
-{{ $options := dict "transpiler" "dartsass" "targetPath" "css/main.css" "outputStyle" "compressed" }}
-{{ $style := resources.Get "scss/main.scss" | css.Sass $options }}
+{{ $style := resources.Get "scss/main.scss" | css.Sass (dict "targetPath" "css/main.css" "outputStyle" "compressed") }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
 
 <script>
@@ -102,7 +104,7 @@ $fontWeights ";") $fontDisplay -}}
         {{ site.Params.description | htmlEscape }}
     {{ end }}" />
 <meta property="og:type" content="{{ if .IsPage }}
-        {{ if eq .Section " posts" }}article{{ else }}website{{ end }} {{ else }} website {{ end }}" />
+        {{ if eq .Section "posts" }}article{{ else }}website{{ end }} {{ else }} website {{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
 <meta property="og:site_name" content="{{ site.Title | htmlEscape }}" />
 {{- $ogImage := .Params.image | default "" -}}
@@ -117,10 +119,10 @@ $fontWeights ";") $fontDisplay -}}
 <meta property="og:image:alt" content="{{ $.Title | htmlEscape }}" />
 {{ end }}
 {{ with .Date }}
-<meta property="article:published_time" content="{{ .Format " 2006-01-02T15:04:05Z07:00" }}" />
+<meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
 {{ end }}
 {{ with .Lastmod }}
-<meta property="article:modified_time" content="{{ .Format " 2006-01-02T15:04:05Z07:00" }}" />
+<meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
 {{ end }}
 {{ with .Params.tags }}
 {{ range first $config.articleTagLimit . }}

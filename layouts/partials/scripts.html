@@ -6,5 +6,6 @@
 {{ $reading := resources.Get "js/reading.js" }}
 {{ $shareButtons := resources.Get "js/share-buttons.js" }}
 
-{{ $js := slice $themeToggle $backToTop $main $search $animations $reading $shareButtons | resources.Concat "js/bundle.js" | resources.Minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := slice $themeToggle $backToTop $main $search $animations $reading $shareButtons | resources.Concat
+"js/bundle.js" | resources.Minify }}
+<script src="{{ $js.RelPermalink }}" defer></script>

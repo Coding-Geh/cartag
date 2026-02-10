@@ -1,176 +1,139 @@
 {{ define "main" }}
-    {{- $config := partial "config-defaults.html" . -}}
-    {{ if site.Params.home.showSearch | default true }}
-        <section class="home-search" aria-label="{{ i18n "search" | default "Search" }}">
-            <div
-                class="search-container"
-                data-search-debounce="{{ site.Params.search.debounce | default 150 }}"
-                data-search-results-limit="{{ site.Params.search.resultsLimit | default 8 }}"
-                data-search-index-url="{{ "/index.json" | relLangURL }}"
-            >
-                <div class="search-input-wrapper">
-                    <label for="home-search" class="sr-only">{{ i18n "search" | default "Search" }}</label>
-                    <svg
-                        class="search-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
-                    >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                    </svg>
-                    <input
-                        type="search"
-                        id="home-search"
-                        class="search-input"
-                        placeholder="{{ i18n "search_placeholder" | default "Search blogs & projects..." }}"
-                        autocomplete="off"
-                        aria-label="{{ i18n "search" | default "Search" }}"
-                        aria-controls="search-results"
-                        aria-expanded="false"
-                        aria-autocomplete="list"
-                    />
-                    <kbd
-                        class="search-shortcut"
-                        aria-label="{{ i18n "search_shortcut" | default "Press Ctrl+K or Cmd+K to search" }}"
-                    >
-                        <span aria-hidden="true">Ctrl+K</span>
-                    </kbd>
-                </div>
-                <div
-                    id="search-results"
-                    class="search-results"
-                    role="listbox"
-                    aria-label="{{ i18n "search_results" | default "Search results" }}"
-                ></div>
-            </div>
-        </section>
+{{- $config := partial "config-defaults.html" . -}}
+{{ if site.Params.home.showSearch | default true }}
+<section class="home-search" aria-label="{{ i18n "search" | default "Search" }}">
+    <div class="search-container" data-search-debounce="{{ site.Params.search.debounce | default 150 }}"
+        data-search-results-limit="{{ site.Params.search.resultsLimit | default 8 }}" data-search-index-url="{{ "/index.json" | relLangURL }}">
+        <div class="search-input-wrapper">
+            <label for="home-search" class="sr-only">{{ i18n "search" | default "Search" }}</label>
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <input type="search" id="home-search" class="search-input" placeholder="{{ i18n "search_placeholder" |
+                default "Search blogs & projects..." }}" autocomplete="off" aria-label="{{ i18n "search" |
+                default "Search" }}" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list" />
+            <kbd class="search-shortcut" aria-label="{{ i18n "search_shortcut" |
+                default "Press Ctrl+K or Cmd+K to search" }}">
+                <span aria-hidden="true">Ctrl+K</span>
+            </kbd>
+        </div>
+        <div id="search-results" class="search-results" role="listbox" aria-label="{{ i18n "search_results" |
+            default "Search results" }}"></div>
+    </div>
+</section>
+{{ end }}
+
+{{ if site.Params.home.showHero | default true }}
+<section class="hero">
+    <div class="hero__greeting">{{ i18n "hero_greeting" | default "Hi, I'm" }}</div>
+    <h1 class="hero__name">{{ site.Title | htmlEscape }}</h1>
+    <p class="hero__role">{{ site.Params.description | htmlEscape }}</p>
+    {{ with site.Params.location }}
+    <p class="hero__location">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        {{ . | htmlEscape }}
+    </p>
+    {{ end }}
+    {{ with site.Params.bio }}
+    <p class="hero__bio">{{ i18n "bio" | default . | plainify | htmlEscape }}</p>
     {{ end }}
 
-    {{ if site.Params.home.showHero | default true }}
-        <section class="hero">
-            <div class="hero__greeting">{{ i18n "hero_greeting" | default "Hi, I'm" }}</div>
-            <h1 class="hero__name">{{ site.Title | htmlEscape }}</h1>
-            <p class="hero__role">{{ site.Params.description | htmlEscape }}</p>
-            {{ with site.Params.location }}
-                <p class="hero__location">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    {{ . | htmlEscape }}
-                </p>
-            {{ end }}
-            {{ with site.Params.bio }}
-                <p class="hero__bio">{{ i18n "bio" | default . | plainify | htmlEscape }}</p>
-            {{ end }}
 
+    <div class="hero__actions">
+        {{ $ctaType := site.Params.home.heroCTA | default "projects" }}
 
-            <div class="hero__actions">
-                {{ $ctaType := site.Params.home.heroCTA | default "projects" }}
-
-                {{ if eq $ctaType "projects" }}
-                    <a href="{{ "/projects/" | relLangURL }}" class="btn btn--primary">
-                        {{ i18n "view_projects" | default "View My Work" }}
-                        {{ partial "icons/arrow-right.html" }}
-                    </a>
-                {{ else if eq $ctaType "contact" }}
-                    {{ with site.Params.social.email }}
-                        <a href="mailto:{{ . }}" class="btn btn--primary">
-                            {{ partial "icons/mail.html" }}
-                            {{ i18n "contact_me" | default "Contact Me" }}
-                        </a>
-                    {{ end }}
-                {{ else if eq $ctaType "resume" }}
-                    {{ with site.Params.resumeURL }}
-                        <a href="{{ . | relURL }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
-                            {{ i18n "download_resume" | default "Download Resume" }}
-                            {{ partial "icons/external-link.html" }}
-                        </a>
-                    {{ end }}
-                {{ end }}
-
-
-                <a href="{{ "/about/" | relLangURL }}" class="btn btn--secondary">
-                    {{ i18n "about_me" | default "About Me" }}
-                </a>
-            </div>
-        </section>
-    {{ end }}
-
-    {{ if site.Params.home.showProjects | default true }}
-        {{ $allProjects := where .Site.RegularPages "Section" "projects" }}
-        {{ $layout := site.Params.home.projectsLayout | default "grid" }}
-        {{ $limit := site.Params.home.projectsLimit | default 4 }}
-        {{ $featuredOnly := site.Params.home.projectsFeaturedOnly | default true }}
-
-        {{ $projects := $allProjects }}
-        {{ if $featuredOnly }}
-            {{ $projects = where $allProjects ".Params.featured" true }}
+        {{ if eq $ctaType "projects" }}
+        <a href="{{ "/projects/" | relLangURL }}" class="btn btn--primary">
+            {{ i18n "view_projects" | default "View My Work" }}
+            {{ partial "icons/arrow-right.html" }}
+        </a>
+        {{ else if eq $ctaType "contact" }}
+        {{ with site.Params.social.email }}
+        <a href="mailto:{{ . }}" class="btn btn--primary">
+            {{ partial "icons/mail.html" }}
+            {{ i18n "contact_me" | default "Contact Me" }}
+        </a>
+        {{ end }}
+        {{ else if eq $ctaType "resume" }}
+        {{ with site.Params.resumeURL }}
+        <a href="{{ . | relURL }}" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+            {{ i18n "download_resume" | default "Download Resume" }}
+            {{ partial "icons/external-link.html" }}
+        </a>
+        {{ end }}
         {{ end }}
 
-        {{ if $projects }}
-            <section class="home-section">
-                <header class="section-header">
-                    <h2 class="section-title">{{ i18n "featured_projects" | default "Featured Projects" }}</h2>
-                    <a href="{{ "/projects/" | relLangURL }}" class="section-link">
-                        {{ i18n "view_all" | default "View All" }}
-                        {{ partial "icons/arrow-right.html" }}
-                    </a>
-                </header>
-                <div class="projects-{{ $layout }}">
-                    {{ range first $limit $projects.ByDate.Reverse }}
-                        {{ partial "project-card.html" . }}
-                    {{ end }}
-                </div>
-            </section>
-        {{ end }}
-    {{ end }}
 
-    {{ if and (site.Params.sections.blog) (site.Params.home.showPosts | default true) }}
-        {{ $posts := where .Site.RegularPages "Section" "posts" }}
-        {{ $limit := site.Params.home.postsLimit | default 3 }}
+        <a href="{{ "/about/" | relLangURL }}" class="btn btn--secondary">
+            {{ i18n "about_me" | default "About Me" }}
+        </a>
+    </div>
+</section>
+{{ end }}
 
-        {{ if $posts }}
-            <section class="home-section">
-                <header class="section-header">
-                    <h2 class="section-title">{{ i18n "latest_posts" | default "Latest Posts" }}</h2>
-                    <a href="{{ "/posts/" | relLangURL }}" class="section-link">
-                        {{ i18n "view_all" | default "View All" }}
-                        {{ partial "icons/arrow-right.html" }}
-                    </a>
-                </header>
-                <div class="posts-compact">
-                    {{ range first $limit $posts.ByDate.Reverse }}
-                        <a href="{{ .RelPermalink }}" class="post-item">
-                            <span class="post-item__title">{{ .Title | htmlEscape }}</span>
-                            <span class="post-item__meta">
-                                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-                                <span class="post-item__dot">·</span>
-                                <span>{{ .ReadingTime }} {{ i18n "min_read" | default "min read" }}</span>
-                            </span>
-                        </a>
-                    {{ end }}
-                </div>
-            </section>
+{{ if site.Params.home.showProjects | default true }}
+{{ $allProjects := where .Site.RegularPages "Section" "projects" }}
+{{ $layout := site.Params.home.projectsLayout | default "grid" }}
+{{ $limit := site.Params.home.projectsLimit | default 4 }}
+{{ $featuredOnly := site.Params.home.projectsFeaturedOnly | default true }}
+
+{{ $projects := $allProjects }}
+{{ if $featuredOnly }}
+{{ $projects = where $allProjects ".Params.featured" true }}
+{{ end }}
+
+{{ if $projects }}
+<section class="home-section">
+    <header class="section-header">
+        <h2 class="section-title">{{ i18n "featured_projects" | default "Featured Projects" }}</h2>
+        <a href="{{ "/projects/" | relLangURL }}" class="section-link">
+            {{ i18n "view_all" | default "View All" }}
+            {{ partial "icons/arrow-right.html" }}
+        </a>
+    </header>
+    <div class="projects-{{ $layout }}">
+        {{ range $i, $p := first $limit $projects.ByDate.Reverse }}
+        {{ partial "project-card.html" (dict "page" $p "first" (eq $i 0)) }}
         {{ end }}
-    {{ end }}
+    </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{ if and (site.Params.sections.blog) (site.Params.home.showPosts | default true) }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $limit := site.Params.home.postsLimit | default 3 }}
+
+{{ if $posts }}
+<section class="home-section">
+    <header class="section-header">
+        <h2 class="section-title">{{ i18n "latest_posts" | default "Latest Posts" }}</h2>
+        <a href="{{ "/posts/" | relLangURL }}" class="section-link">
+            {{ i18n "view_all" | default "View All" }}
+            {{ partial "icons/arrow-right.html" }}
+        </a>
+    </header>
+    <div class="posts-compact">
+        {{ range first $limit $posts.ByDate.Reverse }}
+        <a href="{{ .RelPermalink }}" class="post-item">
+            <span class="post-item__title">{{ .Title | htmlEscape }}</span>
+            <span class="post-item__meta">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+                <span class="post-item__dot">·</span>
+                <span>{{ .ReadingTime }} {{ i18n "min_read" | default "min read" }}</span>
+            </span>
+        </a>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
+{{ end }}
 
 {{ end }}

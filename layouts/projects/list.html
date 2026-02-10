@@ -1,27 +1,27 @@
 {{ define "main" }}
-    {{ if site.Params.projects.showListHeader | default false }}
-        <div class="page-header">
-            <h1 class="page-title">{{ i18n "projects_title" | default "Projects" }}</h1>
-            <p class="page-description">
-                {{ i18n "projects_description" | default "Things I've built and worked on" }}
-            </p>
-        </div>
-    {{ end }}
+{{ if site.Params.projects.showListHeader | default false }}
+<div class="page-header">
+    <h1 class="page-title">{{ i18n "projects_title" | default "Projects" }}</h1>
+    <p class="page-description">
+        {{ i18n "projects_description" | default "Things I've built and worked on" }}
+    </p>
+</div>
+{{ end }}
 
-    {{ $layout := site.Params.projects.layout | default "list" }}
-    {{ $paginator := .Paginate .RegularPages }}
+{{ $layout := site.Params.projects.layout | default "list" }}
+{{ $paginator := .Paginate .RegularPages }}
 
-    {{ if $paginator.Pages }}
-        <div class="projects-{{ $layout }}">
-            {{ range $paginator.Pages.ByDate.Reverse }}
-                {{ partial "project-card.html" . }}
-            {{ end }}
-        </div>
-        {{ partial "pagination.html" $paginator }}
-    {{ else }}
-        <div class="empty-state">
-            {{ partial "icons/folder.html" }}
-            <p>{{ i18n "no_projects" | default "No projects yet." }}</p>
-        </div>
+{{ if $paginator.Pages }}
+<div class="projects-{{ $layout }}">
+    {{ range $paginator.Pages.ByDate.Reverse }}
+    {{ partial "project-card.html" (dict "page" .) }}
     {{ end }}
+</div>
+{{ partial "pagination.html" $paginator }}
+{{ else }}
+<div class="empty-state">
+    {{ partial "icons/folder.html" }}
+    <p>{{ i18n "no_projects" | default "No projects yet." }}</p>
+</div>
+{{ end }}
 {{ end }}

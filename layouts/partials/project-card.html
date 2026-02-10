@@ -1,80 +1,74 @@
 <article class="project-card">
     {{- $config := partial "config-defaults.html" . -}}
-    {{ if .Params.image }}
-        <div class="project-image">
-            <a href="{{ .RelPermalink }}" aria-label="{{ .Title | htmlEscape }}">
-                <img
-                    src="{{ partial "image-url.html" (dict "path" .Params.image "absolute" true) }}"
-                    alt="{{ .Title | htmlEscape }}"
-                    loading="lazy"
-                    width="{{ $config.projectImageWidth }}"
-                    height="{{ $config.projectImageHeight }}"
-                />
-            </a>
-        </div>
+    {{- $first := .first | default false -}}
+    {{ $page := .page | default . }}
+    {{ if $page.Params.image }}
+    <div class="project-image">
+        <a href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title | htmlEscape }}">
+            <img src="{{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true) }}"
+                alt="{{ $page.Title | htmlEscape }}" loading="{{ cond $first " eager" "lazy" }}" {{ if $first
+                }}fetchpriority="high" {{ end }} width="{{ $config.projectImageWidth }}"
+                height="{{ $config.projectImageHeight }}" />
+        </a>
+    </div>
     {{ else }}
-        <div class="project-image">
-            <div class="project-image-placeholder">
-                {{ partial "icons/image.html" }}
-            </div>
+    <div class="project-image">
+        <div class="project-image-placeholder">
+            {{ partial "icons/image.html" }}
         </div>
+    </div>
     {{ end }}
 
 
     <div class="project-content">
         <h3 class="project-title">
-            <a href="{{ .RelPermalink }}">{{ .Title | htmlEscape }}</a>
+            <a href="{{ $page.RelPermalink }}">{{ $page.Title | htmlEscape }}</a>
         </h3>
 
         {{ $desc := "" }}
         {{ if site.Params.projects.useDescriptionOnly | default false }}
-            {{ $desc = .Description }}
+        {{ $desc = $page.Description }}
         {{ else }}
-            {{ $desc = .Description | default .Summary }}
+        {{ $desc = $page.Description | default $page.Summary }}
         {{ end }}
         {{ if $desc }}
-            <p class="project-description">{{ $desc | plainify | htmlEscape }}</p>
+        <p class="project-description">{{ $desc | plainify | htmlEscape }}</p>
         {{ end }}
 
-        {{ with .Params.tags }}
-            <div class="project-tags">
-                {{ range . }}
-                    <a href="{{ partial "tag-url.html" . }}" class="project-tag" rel="tag">{{ . }}</a>
-                {{ end }}
-            </div>
+        {{ with $page.Params.tags }}
+        <div class="project-tags">
+            {{ range . }}
+            <a href="{{ partial "tag-url.html" . }}" class="project-tag" rel="tag">{{ . }}</a>
+            {{ end }}
+        </div>
         {{ end }}
 
 
         <div class="project-links">
-            {{ with .Params.links }}
-                {{ with .demo }}
-                    <a
-                        href="{{ . }}"
-                        class="project-link project-link--primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {{ partial "icons/external-link.html" }}
-                        <span>Demo</span>
-                    </a>
-                {{ end }}
-                {{ with .github }}
-                    <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
-                        {{ partial "icons/github.html" }}
-                        <span>GitHub</span>
-                    </a>
-                {{ end }}
-                {{ with .deck }}
-                    <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
-                        {{ partial "icons/presentation.html" }}
-                        <span>Deck</span>
-                    </a>
-                {{ end }}
+            {{ with $page.Params.links }}
+            {{ with .demo }}
+            <a href="{{ . }}" class="project-link project-link--primary" target="_blank" rel="noopener noreferrer">
+                {{ partial "icons/external-link.html" }}
+                <span>Demo</span>
+            </a>
+            {{ end }}
+            {{ with .github }}
+            <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                {{ partial "icons/github.html" }}
+                <span>GitHub</span>
+            </a>
+            {{ end }}
+            {{ with .deck }}
+            <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                {{ partial "icons/presentation.html" }}
+                <span>Deck</span>
+            </a>
+            {{ end }}
             {{ else }}
-                <a href="{{ $.RelPermalink }}" class="project-link project-link--primary">
-                    {{ partial "icons/arrow-right.html" }}
-                    <span>{{ i18n "view_project" | default "View Project" }}</span>
-                </a>
+            <a href="{{ $page.RelPermalink }}" class="project-link project-link--primary">
+                {{ partial "icons/arrow-right.html" }}
+                <span>{{ i18n "view_project" | default "View Project" }}</span>
+            </a>
             {{ end }}
         </div>
     </div>

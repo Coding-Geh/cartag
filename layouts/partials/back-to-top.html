@@ -1,11 +1,6 @@
 {{- $config := partial "config-defaults.html" . -}}
-<button
-    class="back-to-top"
-    type="button"
-    aria-label="{{ i18n "back_to_top" | default "Back to top" }}"
-    aria-hidden="true"
-    data-scroll-threshold="{{ site.Params.ui.scrollThreshold | default 300 }}"
->
+<button class="back-to-top" type="button" aria-label="{{  i18n "back_to_top" | default "Back to top" }}"
+    data-scroll-threshold="{{ site.Params.ui.scrollThreshold | default 300 }}">
     {{ partial "icons/arrow-up.html" }}
     <span class="sr-only">{{ i18n "back_to_top" | default "Back to top" }}</span>
 </button>

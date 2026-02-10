@@ -1,24 +1,12 @@
-<aside
-    class="sidebar"
-    role="navigation"
-    aria-label="{{ i18n "site_navigation" | default "Site navigation" }}"
-    aria-hidden="true"
-    id="sidebar"
->
+<aside class="sidebar" aria-label="{{ i18n "site_navigation" | default "Site navigation" }}" id="sidebar">
     <div class="sidebar-profile">
         {{ $avatarURL := partial "site-avatar-url.html" . }}
         {{ if $avatarURL }}
-            {{ $zoom := site.Params.avatarZoom | default 100 }}
-            <div class="sidebar-avatar-wrap" style="--avatar-zoom: {{ $zoom }};">
-                <img
-                    src="{{ $avatarURL }}"
-                    alt="{{ i18n "profile_picture" | default "Profile picture of" }} {{ site.Title | htmlEscape }}"
-                    class="sidebar-avatar"
-                    width="100"
-                    height="100"
-                    loading="eager"
-                />
-            </div>
+        {{ $zoom := site.Params.avatarZoom | default 100 }}
+        <div class="sidebar-avatar-wrap" style="--avatar-zoom: {{ $zoom }};">
+            <img src="{{ $avatarURL }}" alt="{{  i18n "profile_picture" | default "Profile picture of" }} {{ site.Title
+                | htmlEscape }}" class="sidebar-avatar" width="100" height="100" loading="eager" />
+        </div>
         {{ end }}
         <h1 class="sidebar-name">{{ site.Title | htmlEscape }}</h1>
         <p class="sidebar-tagline">{{ site.Params.description | htmlEscape }}</p>
@@ -27,51 +15,48 @@
     <nav class="sidebar-nav" aria-label="{{ i18n "main_navigation" | default "Main navigation" }}">
         <ul class="nav-list" role="list">
             {{ $path := .RelPermalink }}
-            {{ $isAboutPage := hasPrefix $path "/about" | or (hasPrefix $path "/en/about") | or (hasPrefix $path "/id/about") }}
-            {{ $isProjectsPage := hasPrefix $path "/projects" | or (hasPrefix $path "/en/projects") | or (hasPrefix $path "/id/projects") }}
-            {{ $isPostsPage := hasPrefix $path "/posts" | or (hasPrefix $path "/en/posts") | or (hasPrefix $path "/id/posts") }}
+            {{ $isAboutPage := hasPrefix $path "/about" | or (hasPrefix $path "/en/about") | or (hasPrefix $path
+            "/id/about") }}
+            {{ $isProjectsPage := hasPrefix $path "/projects" | or (hasPrefix $path "/en/projects") | or (hasPrefix
+            $path "/id/projects") }}
+            {{ $isPostsPage := hasPrefix $path "/posts" | or (hasPrefix $path "/en/posts") | or (hasPrefix $path
+            "/id/posts") }}
             {{ $isHomePage := and (not $isAboutPage) (not $isProjectsPage) (not $isPostsPage) .IsHome }}
 
 
             <li class="nav-item">
-                <a
-                    href="{{ "/" | relLangURL }}"
-                    class="nav-link {{ if $isHomePage }}is-active{{ end }}"
-                    {{ if $isHomePage }}aria-current="page"{{ end }}
-                >
+                <a href="{{ " /" | relLangURL }}" class="nav-link {{ if $isHomePage }}is-active{{ end }}" {{ if
+                    $isHomePage }}aria-current="page" {{ end }}>
                     <span class="nav-icon" aria-hidden="true">{{ partial "icons/home.html" }}</span>
                     <span>{{ i18n "nav_home" | default "Home" }}</span>
                 </a>
             </li>
 
             {{ if site.Params.sections.about | default true }}
-                <li class="nav-item">
-                    <a href="{{ "/about/" | relLangURL }}" class="nav-link {{ if $isAboutPage }}is-active{{ end }}">
-                        {{ partial "icons/user.html" }}
-                        <span>{{ i18n "nav_about" | default "About" }}</span>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ "/about/" | relLangURL }}" class="nav-link {{ if $isAboutPage }}is-active{{ end }}">
+                    {{ partial "icons/user.html" }}
+                    <span>{{ i18n "nav_about" | default "About" }}</span>
+                </a>
+            </li>
             {{ end }}
 
             {{ if site.Params.sections.projects | default true }}
-                <li class="nav-item">
-                    <a
-                        href="{{ "/projects/" | relLangURL }}"
-                        class="nav-link {{ if $isProjectsPage }}is-active{{ end }}"
-                    >
-                        {{ partial "icons/folder.html" }}
-                        <span>{{ i18n "nav_projects" | default "Projects" }}</span>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ "/projects/" | relLangURL }}" class="nav-link {{ if $isProjectsPage }}is-active{{ end }}">
+                    {{ partial "icons/folder.html" }}
+                    <span>{{ i18n "nav_projects" | default "Projects" }}</span>
+                </a>
+            </li>
             {{ end }}
 
             {{ if site.Params.sections.blog | default true }}
-                <li class="nav-item">
-                    <a href="{{ "/posts/" | relLangURL }}" class="nav-link {{ if $isPostsPage }}is-active{{ end }}">
-                        {{ partial "icons/edit.html" }}
-                        <span>{{ i18n "nav_blog" | default "Blog" }}</span>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ "/posts/" | relLangURL }}" class="nav-link {{ if $isPostsPage }}is-active{{ end }}">
+                    {{ partial "icons/edit.html" }}
+                    <span>{{ i18n "nav_blog" | default "Blog" }}</span>
+                </a>
+            </li>
             {{ end }}
         </ul>
     </nav>
@@ -79,150 +64,92 @@
     <div class="sidebar-footer">
         <div class="sidebar-controls">
             {{ if gt (len site.Languages) 1 }}
-                <div class="lang-dropdown" data-lang-dropdown>
-                    <button
-                        type="button"
-                        class="lang-dropdown__trigger"
-                        aria-expanded="false"
-                        aria-haspopup="true"
-                        aria-label="{{ i18n "language" | default "Language" }}"
-                        data-lang-trigger
-                    >
-                        <span class="lang-dropdown__current">{{ site.Language.LanguageName }}</span>
-                    </button>
-                    <ul class="lang-dropdown__list" role="menu" hidden>
-                        {{ $page := . }}
-                        {{ range site.Languages }}
-                            {{ $target := . }}
-                            {{ $url := "" }}
-                            {{ if eq $target.Lang $page.Lang }}
-                                {{ $url = $page.Permalink }}
-                            {{ else }}
-                                {{ range $page.Translations }}
-                                    {{ if eq .Lang $target.Lang }}{{ $url = .Permalink }}{{ end }}
-                                {{ end }}
-                                {{ if not $url }}{{ $url = printf "/%s/" $target.Lang | absURL }}{{ end }}
-                            {{ end }}
-                            <li role="none">
-                                {{ if eq $target.Lang "en" }}
-                                    <a
-                                        href="{{ $url }}"
-                                        class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
+            <div class="lang-dropdown" data-lang-dropdown>
+                <button type="button" class="lang-dropdown__trigger" aria-expanded="false" aria-haspopup="true"
+                    aria-label="{{ i18n "language" | default "Language" }}" data-lang-trigger>
+                    <span class="lang-dropdown__current">{{ site.Language.LanguageName }}</span>
+                </button>
+                <ul class="lang-dropdown__list" role="menu" hidden>
+                    {{ $page := . }}
+                    {{ range site.Languages }}
+                    {{ $target := . }}
+                    {{ $url := "" }}
+                    {{ if eq $target.Lang $page.Lang }}
+                    {{ $url = $page.Permalink }}
+                    {{ else }}
+                    {{ range $page.Translations }}
+                    {{ if eq .Lang $target.Lang }}{{ $url = .Permalink }}{{ end }}
+                    {{ end }}
+                    {{ if not $url }}{{ $url = printf "/%s/" $target.Lang | absURL }}{{ end }}
+                    {{ end }}
+                    <li role="none">
+                        {{ if eq $target.Lang "en" }}
+                        <a href="{{ $url }}" class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
                                             lang-dropdown__item--current
-                                        {{ end }}"
-                                        role="menuitem"
-                                        >English</a
-                                    >
-                                {{ else if eq $target.Lang "id" }}
-                                    <a
-                                        href="{{ $url }}"
-                                        class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
+                                        {{ end }}" role="menuitem">English</a>
+                        {{ else if eq $target.Lang "id" }}
+                        <a href="{{ $url }}" class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
                                             lang-dropdown__item--current
-                                        {{ end }}"
-                                        role="menuitem"
-                                        >Indonesia</a
-                                    >
-                                {{ else }}
-                                    <a
-                                        href="{{ $url }}"
-                                        class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
+                                        {{ end }}" role="menuitem">Indonesia</a>
+                        {{ else }}
+                        <a href="{{ $url }}" class="lang-dropdown__item {{ if eq $target.Lang $page.Lang }}
                                             lang-dropdown__item--current
-                                        {{ end }}"
-                                        role="menuitem"
-                                        >{{ $target.LanguageName }}</a
-                                    >
-                                {{ end }}
-                            </li>
+                                        {{ end }}" role="menuitem">{{ $target.LanguageName }}</a>
                         {{ end }}
-                    </ul>
-                </div>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
             {{ end }}
 
             {{ if site.Params.colorScheme.toggle | default true }}
-                <button
-                    class="theme-toggle"
-                    type="button"
-                    data-theme-toggle
-                    aria-label="{{ i18n "toggle_theme" | default "Toggle theme" }}"
-                    aria-pressed="false"
-                >
-                    <span class="icon-sun" aria-hidden="true">{{ partial "icons/sun.html" }}</span>
-                    <span class="icon-moon" aria-hidden="true">{{ partial "icons/moon.html" }}</span>
-                    <span class="sr-only">{{ i18n "toggle_theme" | default "Toggle theme" }}</span>
-                </button>
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="{{ i18n "toggle_theme" |
+                default "Toggle theme" }}" aria-pressed="false">
+                <span class="icon-sun" aria-hidden="true">{{ partial "icons/sun.html" }}</span>
+                <span class="icon-moon" aria-hidden="true">{{ partial "icons/moon.html" }}</span>
+                <span class="sr-only">{{ i18n "toggle_theme" | default "Toggle theme" }}</span>
+            </button>
             {{ end }}
         </div>
 
         {{ $hasRSS := .Site.Home.OutputFormats.Get "RSS" }}
         {{ $hasSocial := site.Params.social }}
         {{ if or $hasRSS $hasSocial }}
-            <div class="sidebar-social" role="list">
-                {{ with .Site.Home.OutputFormats.Get "RSS" }}
-                    <a
-                        href="{{ .Permalink }}"
-                        class="social-link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="{{ i18n "rss_feed" | default "RSS Feed" }}"
-                        role="listitem"
-                    >
-                        {{ partial "icons/rss.html" }}
-                        <span class="sr-only">{{ i18n "rss_feed" | default "RSS Feed" }}</span>
-                    </a>
-                {{ end }}
-                {{ with site.Params.social }}
-                    {{ with .github }}
-                        <a
-                            href="{{ . }}"
-                            class="social-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="{{ i18n "visit_github" | default "Visit GitHub profile" }}"
-                            role="listitem"
-                        >
-                            {{ partial "icons/github.html" }}
-                            <span class="sr-only">{{ i18n "visit_github" | default "Visit GitHub profile" }}</span>
-                        </a>
-                    {{ end }}
-                    {{ with .linkedin }}
-                        <a
-                            href="{{ . }}"
-                            class="social-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}"
-                            role="listitem"
-                        >
-                            {{ partial "icons/linkedin.html" }}
-                            <span class="sr-only">{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}</span>
-                        </a>
-                    {{ end }}
-                    {{ with .twitter }}
-                        <a
-                            href="{{ . }}"
-                            class="social-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="{{ i18n "visit_twitter" | default "Visit Twitter profile" }}"
-                            role="listitem"
-                        >
-                            {{ partial "icons/twitter.html" }}
-                            <span class="sr-only">{{ i18n "visit_twitter" | default "Visit Twitter profile" }}</span>
-                        </a>
-                    {{ end }}
-                    {{ with .email }}
-                        <a
-                            href="mailto:{{ . }}"
-                            class="social-link"
-                            aria-label="{{ i18n "send_email" | default "Send email" }}"
-                            role="listitem"
-                        >
-                            {{ partial "icons/mail.html" }}
-                            <span class="sr-only">{{ i18n "send_email" | default "Send email" }}</span>
-                        </a>
-                    {{ end }}
-                {{ end }}
-            </div>
+        <div class="sidebar-social" role="list">
+            {{ with .Site.Home.OutputFormats.Get "RSS" }}
+            <a href="{{ .Permalink }}" class="social-link" target="_blank" rel="noopener noreferrer"
+                aria-label="{{ i18n "rss_feed" | default "RSS Feed" }}" role="listitem">
+                {{ partial "icons/rss.html" }}
+                <span class="sr-only">{{ i18n "rss_feed" | default "RSS Feed" }}</span>
+            </a>
+            {{ end }}
+            {{ with site.Params.social }}
+            {{ with .github }}
+            <a href="{{ . }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_github" | default "Visit GitHub profile" }}" role="listitem">
+                {{ partial "icons/github.html" }}
+                <span class="sr-only">{{ i18n "visit_github" | default "Visit GitHub profile" }}</span>
+            </a>
+            {{ end }}
+            {{ with .linkedin }}
+            <a href="{{ . }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}" role="listitem">
+                {{ partial "icons/linkedin.html" }}
+                <span class="sr-only">{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}</span>
+            </a>
+            {{ end }}
+            {{ with .twitter }}
+            <a href="{{ . }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_twitter" | default "Visit Twitter profile" }}" role="listitem">
+                {{ partial "icons/twitter.html" }}
+                <span class="sr-only">{{ i18n "visit_twitter" | default "Visit Twitter profile" }}</span>
+            </a>
+            {{ end }}
+            {{ with .email }}
+            <a href="mailto:{{ . }}" class="social-link" aria-label="{{  i18n "send_email" | default "Send email"  }}" role="listitem">
+                {{ partial "icons/mail.html" }}
+                <span class="sr-only">{{ i18n "send_email" | default "Send email" }}</span>
+            </a>
+            {{ end }}
+            {{ end }}
+        </div>
         {{ end }}
     </div>
 </aside>

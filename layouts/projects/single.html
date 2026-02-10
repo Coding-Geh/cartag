@@ -43,8 +43,10 @@
 
     {{ with .Params.image }}
     <div class="project-cover">
-        <img src="{{ partial "image-url.html" (dict "path" . "absolute" true "width" 1200) }}"
-            alt="{{ $.Title | htmlEscape }}" loading="lazy" />
+        <img src="{{ partial "image-url.html" (dict "path" . "absolute" true "width" 1200) }}" srcset="{{ partial "image-url.html" (dict "path" . "absolute" true "width" 800) }} 800w, {{ partial "image-url.html"
+            (dict "path" . "absolute" true "width" 1200) }} 1200w, {{ partial "image-url.html" (dict "path" . "absolute"
+            true "width" 1600) }} 1600w, {{ partial "image-url.html" (dict "path" . "absolute" true "width" 2400) }}
+            2400w" sizes="(max-width: 900px) 100vw, 900px" alt="{{ $.Title | htmlEscape }}" loading="lazy" />
     </div>
     {{ end }}
 

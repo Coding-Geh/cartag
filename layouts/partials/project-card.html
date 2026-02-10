@@ -5,10 +5,13 @@
     {{ if $page.Params.image }}
     <div class="project-image">
         <a href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title | htmlEscape }}">
-            <img src="{{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true) }}"
-                alt="{{ $page.Title | htmlEscape }}" loading="{{ cond $first " eager" "lazy" }}" {{ if $first
-                }}fetchpriority="high" {{ end }} width="{{ $config.projectImageWidth }}"
-                height="{{ $config.projectImageHeight }}" />
+            <img src="{{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true "width" 800) }}"
+                srcset="{{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true "width" 400) }}
+                400w, {{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true "width" 800) }} 800w,
+                {{ partial "image-url.html" (dict "path" $page.Params.image "absolute" true "width" 1200) }} 1200w"
+                sizes="(max-width: 640px) 90vw, (max-width: 1200px) 45vw, 350px" alt="{{ $page.Title | htmlEscape }}"
+                loading="{{ cond $first " eager" "lazy" }}" {{ if $first }}fetchpriority="high" {{ end }}
+                width="{{ $config.projectImageWidth }}" height="{{ $config.projectImageHeight }}" />
         </a>
     </div>
     {{ else }}

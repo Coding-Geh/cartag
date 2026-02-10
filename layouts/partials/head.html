@@ -111,6 +111,7 @@ $fontWeights ";") $fontDisplay -}}
 {{- $ogImageURL := "" -}}
 {{- if $ogImage }}
 {{ $ogImageURL = partial "image-url.html" (dict "path" $ogImage "absolute" true "width" 1200) }}
+<link rel="preconnect" href="https://res.cloudinary.com">
 {{ else }}
 {{ $ogImageURL = partial "site-avatar-url.html" . }}
 {{ end -}}

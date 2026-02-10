@@ -1,0 +1,52 @@
+{{ $pag := . }}
+{{ if and $pag (gt $pag.TotalPages 1) }}
+    <nav class="pagination" aria-label="{{ i18n "pagination" | default "Pagination" }}">
+        <ul class="pagination__list">
+            {{ if $pag.HasPrev }}
+                <li class="pagination__item">
+                    <a href="{{ $pag.Prev.URL }}" class="pagination__link pagination__link--prev" rel="prev">
+                        {{ i18n "prev_page" | default "Previous" }}
+                    </a>
+                </li>
+            {{ else }}
+                <li class="pagination__item">
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true"
+                        >{{ i18n "prev_page" | default "Previous" }}</span
+                    >
+                </li>
+            {{ end }}
+
+            {{ range $pag.Pagers }}
+                <li class="pagination__item">
+                    {{ if eq .PageNumber $pag.PageNumber }}
+                        <span class="pagination__link pagination__link--current" aria-current="page"
+                            >{{ .PageNumber }}</span
+                        >
+                    {{ else }}
+                        <a href="{{ .URL }}" class="pagination__link">{{ .PageNumber }}</a>
+                    {{ end }}
+                </li>
+            {{ end }}
+
+            {{ if $pag.HasNext }}
+                <li class="pagination__item">
+                    <a href="{{ $pag.Next.URL }}" class="pagination__link pagination__link--next" rel="next">
+                        {{ i18n "next_page" | default "Next" }}
+                    </a>
+                </li>
+            {{ else }}
+                <li class="pagination__item">
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true"
+                        >{{ i18n "next_page" | default "Next" }}</span
+                    >
+                </li>
+            {{ end }}
+        </ul>
+        <p class="pagination__info">
+            {{ i18n "page" | default "Page" }}
+            {{ $pag.PageNumber }}
+            {{ i18n "of" | default "of" }}
+            {{ $pag.TotalPages }}
+        </p>
+    </nav>
+{{ end }}

@@ -1,0 +1,28 @@
+{{- $config := partial "config-defaults.html" . -}}
+{{- $index := slice -}}
+{{- range where .Site.RegularPages "Section" "posts" -}}
+    {{- $index = $index | append (dict
+        "title" .Title
+        "url" .RelPermalink
+        "description" (.Description | default (.Summary | plainify | truncate $config.searchIndexDescriptionLength))
+        "content" (.Plain | truncate $config.searchIndexContentLength "")
+        "tags" .Params.tags
+        "date" (.Date.Format "2006-01-02")
+        "type" "post"
+        "readingTime" .ReadingTime
+        )
+    -}}
+{{- end -}}
+{{- range where .Site.RegularPages "Section" "projects" -}}
+    {{- $index = $index | append (dict
+        "title" .Title
+        "url" .RelPermalink
+        "description" (.Description | default (.Summary | plainify | truncate $config.searchIndexDescriptionLength))
+        "content" (.Plain | truncate $config.searchIndexContentLength "")
+        "tags" .Params.tags
+        "date" (.Date.Format "2006-01-02")
+        "type" "project"
+        )
+    -}}
+{{- end -}}
+{{- $index | jsonify -}}

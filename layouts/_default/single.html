@@ -1,0 +1,6 @@
+{{ define "main" }}
+    <article class="page-content">
+        <h1 class="page-title">{{ .Title | htmlEscape }}</h1>
+        {{ .Content }}
+    </article>
+{{ end }}

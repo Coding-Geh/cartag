@@ -1,0 +1,51 @@
+{{ define "main" }}
+    <div class="page-header">
+        <h1 class="page-title">{{ i18n "tags_title" | default "Tags" }}</h1>
+        <p class="page-description">{{ i18n "tags_description" | default "Browse content by tags" }}</p>
+    </div>
+
+    {{ $terms := .Data.Terms.ByCount }}
+    {{ if not $terms }}
+        {{ $tax := index site.Taxonomies .Data.Plural }}
+        {{ if not $tax }}{{ $tax = index site.Taxonomies "tags" }}{{ end }}
+        {{ if $tax }}{{ $terms = $tax.ByCount }}{{ end }}
+    {{ end }}
+    {{ if not $terms }}
+        {{ $tagData := dict }}
+        {{ $pagesToScan := site.RegularPages }}
+        {{ if not $pagesToScan }}
+            {{ $pagesToScan = where site.Pages "Kind" "page" }}
+        {{ end }}
+        {{ range $pagesToScan }}
+            {{ range .Param "tags" }}
+                {{ $slug := . | urlize }}
+                {{ $entry := index $tagData $slug }}
+                {{ $cnt := 1 }}
+                {{ if $entry }}{{ $cnt = add (index $entry "count") 1 }}{{ end }}
+                {{ $tagData = merge $tagData (dict $slug (dict "name" . "count" $cnt)) }}
+            {{ end }}
+        {{ end }}
+        {{ $base := "/" }}
+        {{ with .Site.Language }}{{ $base = printf "/%s/" .Lang }}{{ end }}
+        {{ if eq $base "/" }}{{ with site.Language }}{{ $base = printf "/%s/" .Lang }}{{ end }}{{ end }}
+        {{ $terms = slice }}
+        {{ range $slug, $entry := $tagData }}
+            {{ $terms = $terms | append (dict "Page" (dict "Title" (index $entry "name") "RelPermalink" (printf "%stags/%s/" $base $slug)) "Count" (index $entry "count")) }}
+        {{ end }}
+        {{ $terms = sort $terms "Count" "desc" }}
+    {{ end }}
+    {{ if $terms }}
+        <div class="tags-cloud">
+            {{ range $terms }}
+                <a href="{{ .Page.RelPermalink }}" class="tag-cloud-item" data-count="{{ .Count }}">
+                    <span class="tag-cloud-name">{{ .Page.Title | htmlEscape }}</span>
+                    <span class="tag-cloud-count">{{ .Count }}</span>
+                </a>
+            {{ end }}
+        </div>
+    {{ else }}
+        <div class="empty-state">
+            <p>{{ i18n "no_tags" | default "No tags yet." }}</p>
+        </div>
+    {{ end }}
+{{ end }}

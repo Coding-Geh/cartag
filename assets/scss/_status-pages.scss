@@ -1,0 +1,281 @@
+.status-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-xl);
+    background-color: var(--color-bg);
+}
+
+.status-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-accent);
+}
+
+.status-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.status-message {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--spacing-xl);
+    line-height: 1.7;
+}
+
+.status-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+}
+
+.status-social {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        border-radius: var(--radius-full);
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border);
+        transition: all var(--transition-fast);
+
+        &:hover {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+            color: white;
+        }
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.page-maintenance .status-icon {
+    animation: status-pulse 2s ease-in-out infinite;
+}
+
+.status-progress {
+    width: 200px;
+    height: 4px;
+    background-color: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+}
+
+.status-progress-bar {
+    height: 100%;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-full);
+    animation: status-progress 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes status-progress {
+    0% {
+        width: 0%;
+        margin-left: 0;
+    }
+
+    50% {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    100% {
+        width: 0%;
+        margin-left: 100%;
+    }
+}
+
+.page-404 .status-icon {
+    width: 120px;
+    height: 120px;
+    opacity: 0.8;
+}
+
+.status-code {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-accent);
+    opacity: 0.9;
+}
+
+.status-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.status-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border: none;
+    cursor: pointer;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.status-btn--primary {
+    background-color: var(--color-accent);
+    color: white;
+
+    &:hover {
+        background-color: var(--color-accent-hover);
+        transform: translateY(-2px);
+        color: white;
+    }
+}
+
+.status-btn--secondary {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+
+    &:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+    }
+}
+
+.page-404 .status-title {
+    font-size: 2rem;
+}
+
+.page-404 .status-message {
+    max-width: 480px;
+    line-height: 1.6;
+}
+
+.page-404 .status-footer {
+    margin-top: var(--spacing-2xl);
+}
+
+.page-404 .status-social a {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border: none;
+}
+
+.page-404 .status-social a:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: transparent;
+    color: var(--color-accent);
+}
+
+.page-coming-soon .status-icon {
+    animation: status-float 3s ease-in-out infinite;
+}
+
+.status-countdown {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+}
+
+.countdown-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+}
+
+.countdown-label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--spacing-xs);
+}
+
+@keyframes status-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .status-title {
+        font-size: 1.75rem;
+    }
+
+    .status-message {
+        font-size: 1rem;
+    }
+
+    .page-404 .status-code {
+        font-size: 4rem;
+    }
+
+    .page-404 .status-title {
+        font-size: 1.5rem;
+    }
+
+    .status-countdown {
+        gap: var(--spacing-md);
+    }
+
+    .countdown-number {
+        font-size: 1.75rem;
+    }
+
+    .countdown-item {
+        min-width: 50px;
+    }
+}

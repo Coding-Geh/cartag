@@ -1,0 +1,11 @@
+# Build output & generated (not source)
+exampleSite/public/
+exampleSite/resources/
+node_modules/
+*.min.js
+package-lock.json
+package.json
+
+# Layouts that break go-template parser on check
+layouts/_default/baseof.html
+layouts/partials/maintenance.html

@@ -1,0 +1,231 @@
+# CartaG Theme Configuration Guide
+# This file shows all available configuration options with examples
+# Copy the sections you need to your site's hugo.toml file
+
+# =============================================================================
+# BASIC SITE CONFIGURATION
+# =============================================================================
+
+baseURL = "https://yoursite.com"
+languageCode = "en"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true  # Creates /en/ and /id/ URLs
+title = "Your Name"
+
+theme = "cartag"
+
+[pagination]
+  pagerSize = 10
+
+# =============================================================================
+# CORE PROFILE SETTINGS
+# =============================================================================
+
+[params]
+  description = "Your tagline or job title"  # Appears in sidebar and hero
+  author = "Your Full Name"                  # Used in meta tags and copyright
+  location = "City, Country"                 # Optional, shows in hero section
+  resumeURL = ""  # Optional: URL for "Download Resume" button (e.g. "/files/cv.pdf")
+
+  # Avatar and Favicon (choose one method):
+  # Method 1: Local images (set useCDN = false)
+  avatar = "images/avatar.jpg"
+  favicon = "images/favicon.ico"
+  avatarZoom = 100  # Avatar crop zoom (100 = normal, 120 = zoomed in)
+  
+  # Images: CDN (optional) and dimensions for project cards
+  [params.images]
+    useCDN = false  # Set to true to use CDN URLs below
+    avatarCDN = "https://your-cdn.com/avatar.jpg"
+    cdnBase = ""  # Base URL for content images, empty = use full URLs in posts
+    projectImageWidth = 300   # Project card image width
+    projectImageHeight = 180  # Project card image height
+
+  # Per-Language Bio (supports multilingual sites)
+  [params.bio]
+    en = "Your bio in English"
+    id = "Your bio in Indonesian"
+    # Add more languages as needed: es, fr, de, etc.
+
+# =============================================================================
+# SITE SECTIONS - Control navigation and content
+# =============================================================================
+
+  [params.sections]
+    about = true      # Show About page in navigation
+    projects = true   # Show Projects page in navigation
+    blog = true       # Show Blog page in navigation
+
+# =============================================================================
+# HOMEPAGE CONFIGURATION
+# =============================================================================
+
+  [params.home]
+    showSearch = true               # Search box on homepage
+    showHero = true                 # Hero section with bio
+    heroCTA = "projects"            # Main button: "projects", "contact", "resume", "none"
+    showProjects = true             # Featured projects section
+    projectsLimit = 4               # Max projects to show
+    projectsLayout = "grid"         # "grid" or "list"
+    projectsFeaturedOnly = true     # Only show projects with featured: true
+    showPosts = true                # Latest posts section
+    postsLimit = 3                  # Max posts to show
+
+# =============================================================================
+# ABOUT PAGE CONFIGURATION
+# =============================================================================
+
+  [params.about]
+    showSkills = true           # Skills section (from front matter)
+    skillsLayout = "badges"     # "badges" or "list" or "grouped"
+    showExperience = true       # Experience section
+    showEducation = true        # Education section
+    showCertifications = true   # Certifications section
+    showContact = false         # Contact form at bottom
+
+# =============================================================================
+# PROJECTS PAGE CONFIGURATION
+# =============================================================================
+
+  [params.projects]
+    layout = "grid"                 # "grid" or "list"
+    showListHeader = false          # Show title and description above list
+    useDescriptionOnly = true       # Use only front matter description (not auto-summary)
+
+# =============================================================================
+# BLOG CONFIGURATION
+# =============================================================================
+
+  [params.blog]
+    layout = "list"                 # "grid" or "list"
+    showListHeader = false          # Show title and description above list
+    showDateOnList = true           # Show date on blog cards
+    showReadTimeOnList = true       # Show "X min read" on cards
+    showExcerptOnList = true        # Show excerpt on cards
+    showReadTime = true             # Show read time on single posts
+    showDate = true                 # Show date on single posts
+    showTOC = false                 # Table of contents on single posts (or set per post via toc: true)
+    showRelated = true              # Related posts section below article
+    relatedPostsLimit = 3           # Max related posts below article
+    tagLimitOnList = 3              # Max tags on post cards
+
+# =============================================================================
+# UI COMPONENTS
+# =============================================================================
+
+  # Floating Action Button (contact button)
+  [params.fab]
+    enable = false                    # Show floating contact button
+    text = "Let's Talk"               # Button text
+    url = "mailto:you@example.com"    # Contact URL
+    icon = "mail"                     # Icon name
+
+  # Back to Top Button
+  [params.backToTop]
+    enable = true  # Show back-to-top button
+
+# =============================================================================
+# SOCIAL LINKS
+# =============================================================================
+
+  [params.social]
+    github = "https://github.com/yourusername"
+    linkedin = "https://linkedin.com/in/yourprofile"
+    twitter = "https://twitter.com/yourusername"  # Leave empty to hide
+    email = "you@example.com"
+
+# =============================================================================
+# THEME AND APPEARANCE
+# =============================================================================
+
+  [params.colorScheme]
+    toggle = true         # Show dark/light mode toggle
+    default = "auto"      # "light", "dark", or "auto" (follows system)
+    primary = "#007acc"   # Theme color for meta theme-color and tiles
+
+# =============================================================================
+# STATUS PAGES (Optional)
+# =============================================================================
+
+  # Maintenance Page - Shows when site is under maintenance
+  [params.maintenance]
+    enable = false  # Set to true to show maintenance page on entire site
+    # title = "Under Maintenance"   # Optional; falls back to i18n maintenance_title
+    # message = "We're making improvements. Back shortly!"  # Optional; falls back to i18n
+
+  # Coming Soon Page - Shows before site launch
+  [params.comingSoon]
+    enable = false  # Set to true to show coming soon page on entire site
+    # title = "Coming Soon"  # Optional; falls back to i18n coming_soon_title
+    
+    # Optional countdown timer (RFC3339 format)
+    # Example: "2025-12-31T23:59:59Z" or leave empty for static page
+    launchDate = ""
+    
+    # Per-language coming soon messages
+    [params.comingSoon.message]
+      en = "We're working hard to bring you something amazing."
+      id = "Kami sedang mengerjakan sesuatu yang luar biasa."
+
+# =============================================================================
+# ADVANCED CONFIGURATION (Optional)
+# =============================================================================
+
+  # SEO Optimization
+  [params.seo]
+    metaDescriptionLength = 160       # Meta description truncate length
+    ogDescriptionLength = 200         # Open Graph description length
+    articleTagLimit = 5               # Max article tags in meta
+    searchIndexDescriptionLength = 160  # Search index JSON: description truncate
+    searchIndexContentLength = 200      # Search index JSON: content truncate
+
+  # Search Behavior
+  [params.search]
+    debounce = 150          # Input delay in milliseconds
+    resultsLimit = 8        # Maximum search results to show
+
+  # Typography (Google Fonts)
+  [params.typography]
+    useGoogleFonts = true                    # Set to false for system fonts
+    fontFamily = "Inter"                     # Any Google Font name
+    fontWeights = [400, 500, 600, 700]       # Font weights to load
+    fontDisplay = "swap"                     # Font loading strategy
+
+  # UI Behavior
+  [params.ui]
+    scrollThreshold = 300  # Pixels scrolled before showing back-to-top
+
+# =============================================================================
+# MULTILINGUAL SUPPORT (Optional)
+# =============================================================================
+
+[languages]
+  [languages.en]
+    weight = 1
+    languageName = "EN"
+    
+  [languages.id]
+    weight = 2
+    languageName = "ID"
+    
+  # Add more languages:
+  # [languages.es]
+  #   weight = 3
+  #   languageName = "ES"
+
+# =============================================================================
+# HUGO CONFIGURATION
+# =============================================================================
+
+[markup]
+  [markup.highlight]
+    style = "github-dark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # Allow HTML in markdown
+
+[taxonomies]
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]  # JSON needed for search functionality

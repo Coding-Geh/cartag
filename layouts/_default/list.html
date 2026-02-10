@@ -1,0 +1,95 @@
+{{ define "main" }}
+    {{ $terms := .Data.Terms.ByCount }}
+    {{ if not $terms }}
+        {{ with index site.Taxonomies "tags" }}
+            {{ $terms = .ByCount }}
+        {{ end }}
+    {{ end }}
+    {{ $isTagsPage := or (eq .Kind "taxonomy") (eq .Type "tags") (eq .Data.Plural "tags") (eq .Title "Tags") (eq .Section "tags") (eq .RelPermalink "/tags/") (eq .RelPermalink "/tags") (hasPrefix .RelPermalink "/tags/") }}
+    {{ if and (not .RegularPages) (not $terms) }}
+        {{ with index site.Taxonomies "tags" }}
+            {{ $terms = .ByCount }}
+            {{ $isTagsPage = true }}
+        {{ end }}
+    {{ end }}
+    {{ if and (not .RegularPages) (not $terms) }}
+        {{ $tagData := dict }}
+        {{ $pagesToScan := site.RegularPages }}
+        {{ if not $pagesToScan }}
+            {{ $pagesToScan = where site.Pages "Kind" "page" }}
+        {{ end }}
+        {{ range $pagesToScan }}
+            {{ range .Param "tags" }}
+                {{ $slug := . | urlize }}
+                {{ $entry := index $tagData $slug }}
+                {{ $cnt := 1 }}
+                {{ if $entry }}{{ $cnt = add (index $entry "count") 1 }}{{ end }}
+                {{ $tagData = merge $tagData (dict $slug (dict "name" . "count" $cnt)) }}
+            {{ end }}
+        {{ end }}
+        {{ if $tagData }}
+            {{ $isTagsPage = true }}
+            {{ $base := "/" }}
+            {{ with .Site.Language }}{{ $base = printf "/%s/" .Lang }}{{ end }}
+            {{ if eq $base "/" }}{{ with site.Language }}{{ $base = printf "/%s/" .Lang }}{{ end }}{{ end }}
+            {{ $terms = slice }}
+            {{ range $slug, $entry := $tagData }}
+                {{ $terms = $terms | append (dict "Page" (dict "Title" (index $entry "name") "RelPermalink" (printf "%stags/%s/" $base $slug)) "Count" (index $entry "count")) }}
+            {{ end }}
+            {{ $terms = sort $terms "Count" "desc" }}
+        {{ end }}
+    {{ end }}
+    {{ if $isTagsPage }}
+        <div class="page-header">
+            <h1 class="page-title">{{ i18n "tags_title" | default "Tags" }}</h1>
+            <p class="page-description">{{ i18n "tags_description" | default "Browse content by tags" }}</p>
+        </div>
+        {{ if $terms }}
+            <div class="tags-cloud">
+                {{ range $terms }}
+                    <a href="{{ .Page.RelPermalink }}" class="tag-cloud-item" data-count="{{ .Count }}">
+                        <span class="tag-cloud-name">{{ .Page.Title | htmlEscape }}</span>
+                        <span class="tag-cloud-count">{{ .Count }}</span>
+                    </a>
+                {{ end }}
+            </div>
+        {{ else }}
+            <div class="empty-state">
+                <p>{{ i18n "no_tags" | default "No tags yet." }}</p>
+            </div>
+        {{ end }}
+    {{ else }}
+        <div class="page-header">
+            <h1 class="page-title">{{ .Title | htmlEscape }}</h1>
+        </div>
+
+        {{ $pages := .RegularPages }}
+        {{ if $pages }}
+            <div class="taxonomy-list">
+                {{ range $pages.ByDate.Reverse }}
+                    {{ $pageURL := .RelPermalink }}
+                    {{ $pageTitle := .Title }}
+                    <article class="taxonomy-item">
+                        <div class="taxonomy-item__content">
+                            <h3 class="taxonomy-item__title">
+                                <a href="{{ $pageURL }}">{{ $pageTitle | htmlEscape }}</a>
+                            </h3>
+                            {{ with .Description }}
+                                <p class="taxonomy-item__desc">{{ . | plainify | htmlEscape }}</p>
+                            {{ end }}
+                            <div class="taxonomy-item__meta">
+                                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+                                <span>·</span>
+                                <span>{{ .ReadingTime }} {{ i18n "min_read" | default "min read" }}</span>
+                            </div>
+                        </div>
+                    </article>
+                {{ end }}
+            </div>
+        {{ else }}
+            <div class="empty-state">
+                <p>{{ i18n "no_posts" | default "No content yet." }}</p>
+            </div>
+        {{ end }}
+    {{ end }}
+{{ end }}

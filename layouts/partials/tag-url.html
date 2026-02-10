@@ -1,0 +1,10 @@
+{{- $tag := . | default "" -}}
+{{- if not $tag -}}
+    {{- "" -}}
+{{- else -}}
+    {{- $tagsBase := "/tags/" | relLangURL -}}
+    {{- if eq (strings.TrimSuffix "/" $tagsBase) "/tags" -}}
+        {{- $tagsBase = printf "/%s/tags/" (site.Language.Lang | default "en") -}}
+    {{- end -}}
+    {{- printf "%s%s/" $tagsBase ($tag | urlize) -}}
+{{- end -}}

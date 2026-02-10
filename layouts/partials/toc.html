@@ -1,0 +1,38 @@
+{{- if .Params.toc | default site.Params.blog.showTOC }}
+    {{- $headers := findRE "<h[2-3][^>]*id=\"([^\"]+)\"[^>]*>([^<]+)</h[2-3]>" .Content }}
+    {{- if gt (len $headers) 2 }}
+        <aside class="toc" aria-label="{{ i18n "table_of_contents" | default "Table of Contents" }}">
+            <div class="toc__header">
+                <span class="toc__title">{{ i18n "toc_title" | default "Contents" }}</span>
+                <button
+                    class="toc__toggle"
+                    type="button"
+                    aria-label="{{ i18n "toggle_table_of_contents" | default "Toggle table of contents" }}"
+                    aria-expanded="true"
+                    aria-controls="toc-nav"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    <span class="sr-only"
+                        >{{ i18n "toggle_table_of_contents" | default "Toggle table of contents" }}</span
+                    >
+                </button>
+            </div>
+            <nav class="toc__nav" id="toc-nav">
+                {{ .Page.TableOfContents }}
+            </nav>
+        </aside>
+    {{- end }}
+{{- end }}

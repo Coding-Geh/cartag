@@ -1,0 +1,32 @@
+{{- $config := partial "config-defaults.html" . -}}
+{{- $relatedLimit := site.Params.blog.relatedPostsLimit | default $config.relatedPostsLimit -}}
+{{- if site.Params.blog.showRelated | default true }}
+    {{- $related := (.Site.RegularPages.Related .) | first $relatedLimit }}
+    {{- if $related }}
+        <section class="related-posts" aria-label="{{ i18n "related_posts" | default "Related posts" }}">
+            <h3 class="related-posts__title">{{ i18n "related_posts" | default "Related Posts" }}</h3>
+            <div class="related-posts__grid">
+                {{- range $related }}
+                    {{- $page := . }}
+                    <a href="{{ $page.RelPermalink }}" class="related-post">
+                        {{- with $page.Params.image }}
+                            <div class="related-post__image">
+                                <img
+                                    src="{{ partial "image-url.html" (dict "path" . "absolute" true) }}"
+                                    alt="{{ $page.Title | htmlEscape }}"
+                                    loading="lazy"
+                                />
+                            </div>
+                        {{- end }}
+                        <div class="related-post__content">
+                            <h4 class="related-post__title">{{ $page.Title | htmlEscape }}</h4>
+                            <time class="related-post__date" datetime="{{ $page.Date.Format "2006-01-02" }}">
+                                {{ $page.Date.Format "Jan 2, 2006" }}
+                            </time>
+                        </div>
+                    </a>
+                {{- end }}
+            </div>
+        </section>
+    {{- end }}
+{{- end }}

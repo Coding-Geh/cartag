@@ -1,0 +1,40 @@
+.project-single {
+    width: 100%;
+}
+
+.project-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.project-cover {
+    margin-bottom: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+
+    img {
+        width: 100%;
+    }
+}
+
+.project-body {
+    h2,
+    h3,
+    h4 {
+        margin-top: var(--spacing-2xl);
+    }
+
+    img {
+        border-radius: var(--radius-md);
+        margin: var(--spacing-lg) 0;
+    }
+}

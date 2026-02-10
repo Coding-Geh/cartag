@@ -1,0 +1,10 @@
+{{ $themeToggle := resources.Get "js/theme-toggle.js" }}
+{{ $backToTop := resources.Get "js/back-to-top.js" }}
+{{ $main := resources.Get "js/main.js" }}
+{{ $search := resources.Get "js/search.js" }}
+{{ $animations := resources.Get "js/animations.js" }}
+{{ $reading := resources.Get "js/reading.js" }}
+{{ $shareButtons := resources.Get "js/share-buttons.js" }}
+
+{{ $js := slice $themeToggle $backToTop $main $search $animations $reading $shareButtons | resources.Concat "js/bundle.js" | resources.Minify }}
+<script src="{{ $js.RelPermalink }}"></script>

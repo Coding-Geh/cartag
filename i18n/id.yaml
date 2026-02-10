@@ -1,0 +1,132 @@
+# Navigation
+nav_home: 'Beranda'
+nav_about: 'Tentang'
+nav_projects: 'Proyek'
+nav_blog: 'Blog'
+home: 'Beranda'
+
+# Accessibility
+skip_to_content: 'Lewati ke konten utama'
+main_content: 'Konten utama'
+site_navigation: 'Navigasi situs'
+main_navigation: 'Navigasi utama'
+profile_picture: 'Foto profil'
+language: 'Bahasa'
+open_menu: 'Buka menu'
+close_menu: 'Tutup menu'
+toggle_theme: 'Ganti tema'
+current_page: 'Halaman saat ini'
+keyboard_shortcuts: 'Shortcut keyboard tersedia'
+
+# Search
+search: 'Cari'
+search_placeholder: 'Cari artikel & proyek...'
+search_shortcut: 'Tekan Ctrl+K atau Cmd+K untuk mencari'
+search_results: 'Hasil pencarian'
+
+# Home - Hero
+hero_greeting: 'Halo, saya'
+view_projects: 'Lihat Karya Saya'
+about_me: 'Tentang Saya'
+contact_me: 'Hubungi Saya'
+download_resume: 'Unduh CV'
+
+# Home - Sections
+featured_projects: 'Proyek Unggulan'
+latest_posts: 'Artikel Terbaru'
+view_all: 'Lihat Semua'
+
+# About
+skills: 'Keahlian'
+experience: 'Pengalaman'
+education: 'Pendidikan'
+certifications: 'Sertifikasi'
+
+# Bio
+bio: 'Coding sampai tertidur.'
+get_in_touch: 'Hubungi Saya'
+contact_message: 'Punya proyek yang ingin dikerjakan? Saya senang mendengarnya.'
+view_credential: 'Lihat Kredensial'
+
+# Projects
+projects_title: 'Proyek'
+projects_description: 'Hal-hal yang sudah saya buat'
+view_project: 'Lihat Proyek'
+live_demo: 'Demo'
+source_code: 'Kode Sumber'
+presentation_deck: 'Materi Presentasi'
+project: 'Proyek'
+
+# Blog & Posts
+blog_title: 'Blog'
+blog_description: 'Tulisan, tutorial, dan wawasan'
+min_read: 'menit baca'
+prev_post: 'Sebelumnya'
+next_post: 'Selanjutnya'
+post_navigation: 'Navigasi artikel'
+post: 'Artikel'
+related_posts: 'Artikel Terkait'
+share: 'Bagikan'
+share_article: 'Bagikan artikel ini'
+share_on_twitter: 'Bagikan ke Twitter'
+share_on_linkedin: 'Bagikan ke LinkedIn'
+share_on_whatsapp: 'Bagikan ke WhatsApp'
+copy_link: 'Salin tautan'
+
+# Table of Contents
+table_of_contents: 'Daftar Isi'
+toc_title: 'Isi'
+toggle_table_of_contents: 'Buka/tutup daftar isi'
+
+# Taxonomy / Tags
+tags_title: 'Tag'
+tags_description: 'Jelajahi konten berdasarkan tag'
+tag_label: 'Tag'
+posts_with_tag: 'artikel dengan tag ini'
+no_tags: 'Belum ada tag.'
+
+# Breadcrumb
+breadcrumb: 'Breadcrumb'
+
+# Pagination
+pagination: 'Pagination'
+prev_page: 'Sebelumnya'
+next_page: 'Selanjutnya'
+page: 'Halaman'
+of: 'dari'
+project_navigation: 'Navigasi proyek'
+prev_project: 'Sebelumnya'
+next_project: 'Selanjutnya'
+
+# Social / Footer (aria & links)
+visit_github: 'Kunjungi profil GitHub'
+visit_linkedin: 'Kunjungi profil LinkedIn'
+visit_twitter: 'Kunjungi profil Twitter'
+send_email: 'Kirim email'
+visit_hugo: 'Kunjungi situs Hugo'
+visit_theme_github: 'Kunjungi tema CartaG di GitHub'
+rss_feed: 'Feed RSS'
+built_with: 'Dibuat dengan'
+theme: 'Tema'
+
+# Empty states
+no_projects: 'Belum ada proyek.'
+no_posts: 'Belum ada postingan.'
+
+# 404
+page_not_found: 'Halaman Tidak Ditemukan'
+page_not_found_message: 'Halaman yang kamu cari tidak ada atau sudah dipindahkan.'
+back_to_home: 'Kembali ke Beranda'
+go_back: 'Kembali'
+
+# Maintenance
+maintenance_title: 'Sedang Perbaikan'
+maintenance_message: 'Kami sedang melakukan perbaikan. Segera kembali!'
+
+# Coming Soon
+coming_soon_title: 'Segera Hadir'
+coming_soon_message: 'Kami sedang mengerjakan sesuatu yang luar biasa. Nantikan!'
+days: 'Hari'
+hours: 'Jam'
+minutes: 'Menit'
+seconds: 'Detik'

@@ -1,0 +1,135 @@
+# CartaG Theme - Example Site
+# Run from this folder: hugo server --themesDir ../..
+
+baseURL = "https://example.com"
+languageCode = "en"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+title = "Jane Doe"
+
+theme = "cartag"
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Developer & Designer"
+  author = "Jane Doe"
+  location = "City, Country"
+  avatar = "images/avatar.jpg"
+  favicon = "images/avatar.jpg"
+  
+  # Per-Language Bio Configuration
+  # Supports multiple languages - add more language codes as needed
+  [params.bio]
+    en = "Building things on the web."
+    id = "Membangun hal-hal di web."
+
+  [params.images]
+    useCDN = false
+    avatarCDN = ""
+    cdnBase = ""
+    projectImageWidth = 300
+    projectImageHeight = 180
+
+  [params.sections]
+    about = true
+    projects = true
+    blog = true
+
+  [params.home]
+    showSearch = true
+    showHero = true
+    heroCTA = "projects"
+    showProjects = true
+    projectsLimit = 4
+    projectsLayout = "grid"
+    projectsFeaturedOnly = false
+    showPosts = true
+    postsLimit = 3
+
+  [params.about]
+    showSkills = true
+    skillsLayout = "badges"
+    showExperience = true
+    showEducation = true
+    showCertifications = true
+    showContact = false
+
+  [params.projects]
+    layout = "grid"
+    showListHeader = true
+    useDescriptionOnly = true
+
+  [params.blog]
+    layout = "list"
+    showListHeader = true
+    showDateOnList = true
+    showReadTimeOnList = true
+    showExcerptOnList = true
+    showReadTime = true
+    showDate = true
+    showTOC = false
+    showRelated = true
+    relatedPostsLimit = 3
+    tagLimitOnList = 3
+
+  [params.fab]
+    enable = true
+    text = "Let's Talk"
+    url = "mailto:hello@example.com"
+    icon = "mail"
+
+  [params.backToTop]
+    enable = true
+
+  [params.social]
+    github = "https://github.com/yourusername"
+    linkedin = "https://linkedin.com/in/yourprofile"
+    twitter = ""
+    email = "hello@example.com"
+
+  [params.colorScheme]
+    toggle = true
+    default = "auto"
+    primary = "#007acc"
+
+  # SEO (best practice for public template)
+  [params.seo]
+    metaDescriptionLength = 160
+    ogDescriptionLength = 200
+    searchIndexDescriptionLength = 160
+    searchIndexContentLength = 200
+    articleTagLimit = 5
+
+  [params.maintenance]
+    enable = false
+
+  [params.comingSoon]
+    enable = false
+    launchDate = ""
+    
+    # Per-Language Coming Soon Messages
+    [params.comingSoon.message]
+      en = "We're working hard to bring you something amazing. Stay tuned!"
+      id = "Kami sedang mengerjakan sesuatu yang luar biasa. Tetap terhubung!"
+
+[languages.en]
+  weight = 1
+  languageName = "EN"
+[languages.id]
+  weight = 2
+  languageName = "ID"
+
+[markup]
+  [markup.highlight]
+    style = "github-dark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]

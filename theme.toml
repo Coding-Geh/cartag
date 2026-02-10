@@ -1,0 +1,15 @@
+# CartaG - Hugo theme
+# https://github.com/Coding-Geh/cartag
+
+name = "CartaG"
+license = "CC BY 4.0"
+licenselink = "https://creativecommons.org/licenses/by/4.0/"
+description = "Minimal portfolio theme with sidebar, dark/light mode, full i18n (EN/ID), and search"
+homepage = "https://github.com/Coding-Geh/cartag"
+tags = ["portfolio", "minimal", "dark mode", "i18n", "responsive", "sidebar", "search"]
+features = ["dark mode", "i18n", "projects", "toggleable sections", "search", "RSS"]
+min_version = "0.112.0"
+
+[author]
+  name = "Coding Geh"
+  homepage = "https://codinggeh.com"

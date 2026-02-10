@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" data-theme="light" data-theme-default="{{ site.Params.colorScheme.default | default "auto" }}">
+
+<head>
+  {{- partial "head.html" . -}}
+</head>
+
+<body{{ if site.Params.maintenance.enable }} class="page-maintenance"{{ end }}>
+  {{- partial "skip-link.html" . -}}
+  {{- if site.Params.maintenance.enable }}
+  {{- partial "maintenance.html" . -}}
+  {{- else if site.Params.comingSoon.enable }}
+  {{- partial "coming-soon.html" . -}}
+  {{- else }}
+  {{- partial "mobile-header.html" . -}}
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="site-wrapper">
+    {{- partial "sidebar.html" . -}}
+
+    <main id="main-content" class="main-content" role="main" tabindex="-1" aria-label="{{ i18n "main_content" | default "Main content" }}">
+      {{- block "main" . }}{{- end }}
+    </main>
+  </div>
+  {{- end }}
+
+  {{- if and (not site.Params.maintenance.enable) (not site.Params.comingSoon.enable) }}
+  {{- partial "footer.html" . -}}
+
+  {{- if site.Params.backToTop.enable | default true }}
+  {{- partial "back-to-top.html" . -}}
+  {{- end }}
+
+  {{- if site.Params.fab.enable }}
+  {{- partial "contact-cta.html" . -}}
+  {{- end }}
+  {{- end }}
+
+  {{- if not (or site.Params.maintenance.enable site.Params.comingSoon.enable) }}
+  {{- partial "scripts.html" . -}}
+  {{- end }}
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<footer class="site-footer" role="contentinfo">
+    <p>
+        © {{ now.Year }} {{ site.Title }} ·
+        {{ i18n "built_with" | default "Built with" }}
+        <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_hugo" | default "Visit Hugo website" }}">Hugo</a>
+        ·
+        {{ i18n "theme" | default "Theme" }}
+        <a href="https://github.com/Coding-Geh/cartag" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_theme_github" | default "Visit CartaG theme on GitHub" }}">CartaG</a>
+        {{ with .Site.Home.OutputFormats.Get "RSS" }}
+            ·
+            <a href="{{ .Permalink }}" class="footer-rss" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "rss_feed" | default "RSS Feed" }}">
+                {{ partial "icons/rss.html" }}
+                <span>RSS</span>
+            </a>
+        {{ end }}
+    </p>
+
+    {{ with site.Params.social }}
+        <div class="footer-social" role="list">
+            {{ with .github }}
+                <a href="{{ . }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_github" | default "Visit GitHub profile" }}" role="listitem">
+                    {{ partial "icons/github.html" }}
+                    <span class="sr-only">{{ i18n "visit_github" | default "Visit GitHub profile" }}</span>
+                </a>
+            {{ end }}
+            {{ with .linkedin }}
+                <a href="{{ . }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}" role="listitem">
+                    {{ partial "icons/linkedin.html" }}
+                    <span class="sr-only">{{ i18n "visit_linkedin" | default "Visit LinkedIn profile" }}</span>
+                </a>
+            {{ end }}
+            {{ with .email }}
+                <a href="mailto:{{ . }}" class="social-link" aria-label="{{ i18n "send_email" | default "Send email" }}" role="listitem">
+                    {{ partial "icons/mail.html" }}
+                    <span class="sr-only">{{ i18n "send_email" | default "Send email" }}</span>
+                </a>
+            {{ end }}
+        </div>
+    {{ end }}
+</footer>

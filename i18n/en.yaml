@@ -1,0 +1,132 @@
+# Navigation
+nav_home: 'Home'
+nav_about: 'About'
+nav_projects: 'Projects'
+nav_blog: 'Blog'
+home: 'Home'
+
+# Accessibility
+skip_to_content: 'Skip to main content'
+main_content: 'Main content'
+site_navigation: 'Site navigation'
+main_navigation: 'Main navigation'
+profile_picture: 'Profile picture of'
+language: 'Language'
+open_menu: 'Open menu'
+close_menu: 'Close menu'
+toggle_theme: 'Toggle theme'
+current_page: 'Current page'
+keyboard_shortcuts: 'Keyboard shortcuts available'
+
+# Search
+search: 'Search'
+search_placeholder: 'Search blogs & projects...'
+search_shortcut: 'Press Ctrl+K or Cmd+K to search'
+search_results: 'Search results'
+
+# Home - Hero
+hero_greeting: "Hi, I'm"
+view_projects: 'View My Work'
+about_me: 'About Me'
+contact_me: 'Contact Me'
+download_resume: 'Download Resume'
+
+# Home - Sections
+featured_projects: 'Featured Projects'
+latest_posts: 'Latest Posts'
+view_all: 'View All'
+
+# About
+skills: 'Skills'
+experience: 'Experience'
+education: 'Education'
+certifications: 'Certifications'
+
+# Bio
+bio: 'Coding until sleeping.'
+get_in_touch: 'Get in Touch'
+contact_message: "Have a project in mind? I'd love to hear about it."
+view_credential: 'View Credential'
+
+# Projects
+projects_title: 'Projects'
+projects_description: "Things I've built and worked on"
+view_project: 'View Project'
+live_demo: 'Live Demo'
+source_code: 'Source Code'
+presentation_deck: 'Presentation Deck'
+project: 'Project'
+
+# Blog & Posts
+blog_title: 'Blog'
+blog_description: 'Thoughts, tutorials, and insights'
+min_read: 'min read'
+prev_post: 'Previous'
+next_post: 'Next'
+post_navigation: 'Post navigation'
+post: 'Post'
+related_posts: 'Related Posts'
+share: 'Share'
+share_article: 'Share this article'
+share_on_twitter: 'Share on Twitter'
+share_on_linkedin: 'Share on LinkedIn'
+share_on_whatsapp: 'Share on WhatsApp'
+copy_link: 'Copy link'
+
+# Table of Contents
+table_of_contents: 'Table of Contents'
+toc_title: 'Contents'
+toggle_table_of_contents: 'Toggle table of contents'
+
+# Taxonomy / Tags
+tags_title: 'Tags'
+tags_description: 'Browse content by tags'
+tag_label: 'Tag'
+posts_with_tag: 'posts with this tag'
+no_tags: 'No tags yet.'
+
+# Breadcrumb
+breadcrumb: 'Breadcrumb'
+
+# Pagination
+pagination: 'Pagination'
+prev_page: 'Previous'
+next_page: 'Next'
+page: 'Page'
+of: 'of'
+project_navigation: 'Project navigation'
+prev_project: 'Previous'
+next_project: 'Next'
+
+# Social / Footer (aria & links)
+visit_github: 'Visit GitHub profile'
+visit_linkedin: 'Visit LinkedIn profile'
+visit_twitter: 'Visit Twitter profile'
+send_email: 'Send email'
+visit_hugo: 'Visit Hugo website'
+visit_theme_github: 'Visit CartaG theme on GitHub'
+rss_feed: 'RSS Feed'
+built_with: 'Built with'
+theme: 'Theme'
+
+# Empty states
+no_projects: 'No projects yet.'
+no_posts: 'No posts yet.'
+
+# 404
+page_not_found: 'Page Not Found'
+page_not_found_message: "Oops! The page you're looking for doesn't exist or has been moved."
+back_to_home: 'Back to Home'
+go_back: 'Go Back'
+
+# Maintenance
+maintenance_title: 'Under Maintenance'
+maintenance_message: "We're currently making some improvements. We'll be back shortly!"
+
+# Coming Soon
+coming_soon_title: 'Coming Soon'
+coming_soon_message: "We're working on something amazing. Stay tuned!"
+days: 'Days'
+hours: 'Hours'
+minutes: 'Minutes'
+seconds: 'Seconds'

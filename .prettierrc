@@ -1,0 +1,16 @@
+{
+    "plugins": ["prettier-plugin-go-template"],
+    "overrides": [
+        {
+            "files": ["*.html", "*.json"],
+            "options": {
+                "parser": "go-template"
+            }
+        }
+    ],
+    "singleQuote": true,
+    "semi": true,
+    "tabWidth": 4,
+    "useTabs": false,
+    "printWidth": 120
+}

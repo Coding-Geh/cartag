@@ -1,0 +1,136 @@
+{{ define "main" }}
+    <article class="about">
+        <div class="about__bio prose">
+            {{ .Content }}
+        </div>
+
+        {{ if and (site.Params.about.showSkills | default true) .Params.skills }}
+            <section class="about__section">
+                <h2 class="about__section-title">{{ i18n "skills" | default "Skills" }}</h2>
+                {{ $layout := site.Params.about.skillsLayout | default "badges" }}
+                {{ if eq $layout "grouped" }}
+                    <div class="skills-grouped">
+                        {{ range .Params.skills }}
+                            <div class="skill-group">
+                                <h3 class="skill-group__title">{{ .category | htmlEscape }}</h3>
+                                <div class="skill-badges">
+                                    {{ range .items }}
+                                        <span class="skill-badge">{{ . | htmlEscape }}</span>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        {{ end }}
+                    </div>
+                {{ else }}
+                    <div class="skill-badges">
+                        {{ range .Params.skills }}
+                            <span class="skill-badge">{{ . | htmlEscape }}</span>
+                        {{ end }}
+                    </div>
+                {{ end }}
+            </section>
+        {{ end }}
+
+        {{ if and (site.Params.about.showExperience | default true) .Params.experience }}
+            <section class="about__section">
+                <h2 class="about__section-title">{{ i18n "experience" | default "Experience" }}</h2>
+                <div class="timeline">
+                    {{ range .Params.experience }}
+                        <div class="timeline__item">
+                            <div class="timeline__header">
+                                <h3 class="timeline__title">{{ .role | htmlEscape }}</h3>
+                                <span class="timeline__company">{{ .company | htmlEscape }}</span>
+                            </div>
+                            <div class="timeline__meta">
+                                <span class="timeline__period">{{ .period | htmlEscape }}</span>
+                                {{ with .location }}
+                                    <span class="timeline__location">· {{ . | htmlEscape }}</span>
+                                {{ end }}
+                            </div>
+                            {{ with .description }}
+                                <p class="timeline__description">{{ . | plainify | htmlEscape }}</p>
+                            {{ end }}
+                        </div>
+                    {{ end }}
+                </div>
+            </section>
+        {{ end }}
+
+        {{ if and (site.Params.about.showEducation | default true) .Params.education }}
+            <section class="about__section">
+                <h2 class="about__section-title">{{ i18n "education" | default "Education" }}</h2>
+                <div class="timeline">
+                    {{ range .Params.education }}
+                        <div class="timeline__item">
+                            <div class="timeline__header">
+                                <h3 class="timeline__title">{{ .degree }}</h3>
+                                <span class="timeline__company">{{ .institution | htmlEscape }}</span>
+                            </div>
+                            <div class="timeline__meta">
+                                <span class="timeline__period">{{ .year | htmlEscape }}</span>
+                            </div>
+                            {{ with .description }}
+                                <p class="timeline__description">{{ . | plainify | htmlEscape }}</p>
+                            {{ end }}
+                        </div>
+                    {{ end }}
+                </div>
+            </section>
+        {{ end }}
+
+        {{ if and (site.Params.about.showCertifications | default true) .Params.certifications }}
+            <section class="about__section">
+                <h2 class="about__section-title">{{ i18n "certifications" | default "Certifications" }}</h2>
+                <div class="cert-grid">
+                    {{ range .Params.certifications }}
+                        <div class="cert-card">
+                            <div class="cert-card__info">
+                                <h3 class="cert-card__title">{{ .name | htmlEscape }}</h3>
+                                {{ with .issuer }}<p class="cert-card__issuer">{{ . | htmlEscape }}</p>{{ end }}
+                            </div>
+                            <div class="cert-card__meta">
+                                <span class="cert-card__year">{{ .year | htmlEscape }}</span>
+                                {{ with .url }}
+                                    <a href="{{ . }}" class="cert-card__link" target="_blank" rel="noopener noreferrer">
+                                        {{ i18n "view_credential" | default "View" }}
+                                        {{ partial "icons/external-link.html" }}
+                                    </a>
+                                {{ end }}
+                            </div>
+                        </div>
+                    {{ end }}
+                </div>
+            </section>
+        {{ end }}
+
+        {{ if site.Params.about.showContact | default true }}
+            <section class="about__contact">
+                <h2 class="about__section-title">{{ i18n "get_in_touch" | default "Get in Touch" }}</h2>
+                <p class="about__contact-text">
+                    {{ i18n "contact_message" | default "Have a project in mind? I'd love to hear about it." }}
+                </p>
+
+                <div class="about__contact-links">
+                    {{ with site.Params.social.email }}
+                        <a href="mailto:{{ . }}" class="contact-link">
+                            {{ partial "icons/mail.html" }}
+                            <span>{{ . }}</span>
+                        </a>
+                    {{ end }}
+                    {{ with site.Params.social.linkedin }}
+                        <a href="{{ . }}" class="contact-link" target="_blank" rel="noopener noreferrer">
+                            {{ partial "icons/linkedin.html" }}
+                            <span>LinkedIn</span>
+                        </a>
+                    {{ end }}
+                    {{ with site.Params.social.github }}
+                        <a href="{{ . }}" class="contact-link" target="_blank" rel="noopener noreferrer">
+                            {{ partial "icons/github.html" }}
+                            <span>GitHub</span>
+                        </a>
+                    {{ end }}
+                </div>
+            </section>
+        {{ end }}
+    </article>
+{{ end }}

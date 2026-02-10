@@ -1,0 +1,20 @@
+{
+  "name": "cartag",
+  "version": "1.0.0",
+  "description": "CartaG v1.0.0 is a modern, accessible, and performance-optimized Hugo theme for portfolios and blogs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx stylelint \"**/*.scss\" && npx prettier --check .",
+    "format": "npx prettier --write ."
+  },
+  "keywords": ["hugo", "theme", "portfolio"],
+  "author": "Coding Geh",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "prettier-plugin-go-template": "^0.0.15",
+    "stylelint": "^16.2.0",
+    "stylelint-config-standard-scss": "^13.0.0"
+  }
+}

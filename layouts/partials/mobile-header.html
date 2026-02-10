@@ -1,0 +1,28 @@
+<header class="mobile-header" role="banner">
+    <button
+        class="menu-toggle"
+        type="button"
+        aria-label="{{ i18n "open_menu" | default "Open menu" }}"
+        aria-expanded="false"
+        aria-controls="sidebar"
+    >
+        {{ partial "icons/menu.html" }}
+        <span class="sr-only">{{ i18n "open_menu" | default "Open menu" }}</span>
+    </button>
+
+    <span class="mobile-title">{{ site.Title }}</span>
+
+    {{ if site.Params.colorScheme.toggle | default true }}
+        <button
+            class="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="{{ i18n "toggle_theme" | default "Toggle theme" }}"
+            aria-pressed="false"
+        >
+            <span class="icon-sun" aria-hidden="true">{{ partial "icons/sun.html" }}</span>
+            <span class="icon-moon" aria-hidden="true">{{ partial "icons/moon.html" }}</span>
+            <span class="sr-only">{{ i18n "toggle_theme" | default "Toggle theme" }}</span>
+        </button>
+    {{ end }}
+</header>

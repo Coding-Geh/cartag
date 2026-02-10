@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Example site build output
+exampleSite/public/
+exampleSite/resources/
+exampleSite/.hugo_build.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Hugo
+.hugo_build.lock

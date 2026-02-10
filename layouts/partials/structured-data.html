@@ -1,0 +1,156 @@
+{{- $config := partial "config-defaults.html" . -}}
+
+{{- if .IsHome }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site.Title | jsonify }},
+    "url": {{ site.BaseURL | jsonify }},
+    "description": {{ site.Params.description | default "" | jsonify }},
+    "author": {
+        "@type": "Person",
+        "name": {{ site.Params.author | default "" | jsonify }},
+        {{ with site.Params.social.email }}
+        "email": {{ . | jsonify }},
+        {{ end }}
+        {{ with site.Params.social.github }}
+        "url": {{ . | jsonify }}
+        {{ end }}
+    },
+    "publisher": {
+        "@type": "Person",
+        "name": {{ site.Params.author | default "" | jsonify }}
+    }
+    {{- $siteAvatar := partial "site-avatar-url.html" . -}}
+    {{- if $siteAvatar }},
+    "image": {{ $siteAvatar | jsonify }}
+    {{- end }}
+}
+</script>
+{{- end }}
+
+{{- if and .IsPage (eq .Section "posts") }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": {{ .Title | jsonify }},
+    "description": {{ with .Description }}{{ . | plainify | truncate $config.searchIndexDescriptionLength | jsonify }}{{ else }}{{ .Summary | plainify | truncate $config.searchIndexDescriptionLength | jsonify }}{{ end }},
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+    "author": {
+        "@type": "Person",
+        "name": {{ site.Params.author | default "" | jsonify }},
+        {{ with site.Params.social.email }}
+        "email": {{ . | jsonify }},
+        {{ end }}
+        {{ with site.Params.social.github }}
+        "url": {{ . | jsonify }}
+        {{ end }}
+    },
+    "publisher": {
+        "@type": "Person",
+        "name": {{ site.Params.author | default "" | jsonify }},
+        {{ with partial "site-avatar-url.html" . }}
+        "logo": {
+            "@type": "ImageObject",
+            "url": {{ . | jsonify }}
+        }
+        {{ end }}
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ .Permalink | jsonify }}
+    }
+    {{- with .Params.image }},
+    "image": {
+        "@type": "ImageObject",
+        "url": {{ partial "image-url.html" (dict "path" . "absolute" true) | jsonify }},
+        "alt": {{ $.Title | jsonify }}
+    }
+    {{- end }}
+    {{- with .Params.tags }},
+    "keywords": {{ delimit . ", " | jsonify }}
+    {{- end }}
+}
+</script>
+{{- end }}
+
+{{- if and .IsPage (eq .Section "projects") }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": {{ .Title | jsonify }},
+    "description": {{ with .Description }}{{ . | plainify | truncate $config.searchIndexDescriptionLength | jsonify }}{{ else }}{{ .Summary | plainify | truncate $config.searchIndexDescriptionLength | jsonify }}{{ end }},
+    "dateCreated": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+    "author": {
+        "@type": "Person",
+        "name": {{ site.Params.author | default "" | jsonify }}
+    },
+    "url": {{ .Permalink | jsonify }}
+    {{- with .Params.image }},
+    "image": {
+        "@type": "ImageObject",
+        "url": {{ partial "image-url.html" (dict "path" . "absolute" true) | jsonify }},
+        "alt": {{ $.Title | jsonify }}
+    }
+    {{- end }}
+    {{- with .Params.links.demo }},
+    "url": {{ . | jsonify }}
+    {{- end }}
+    {{- with .Params.tags }},
+    "keywords": {{ delimit . ", " | jsonify }}
+    {{- end }}
+}
+</script>
+{{- end }}
+
+{{- if not .IsHome }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": {{ (i18n "home" | default "Home") | jsonify }},
+            "item": {{ site.BaseURL | jsonify }}
+        }
+        {{- if .Parent }}
+        ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ .Parent.Title | jsonify }},
+            "item": {{ .Parent.Permalink | jsonify }}
+        }
+        {{- end }}
+        {{- if eq .Section "posts" }}
+        ,{
+            "@type": "ListItem",
+            "position": {{ if .Parent }}3{{ else }}2{{ end }},
+            "name": {{ (i18n "blog_title" | default "Blog") | jsonify }},
+            "item": {{ ("/posts/" | relLangURL) | jsonify }}
+        }
+        {{- end }}
+        {{- if eq .Section "projects" }}
+        ,{
+            "@type": "ListItem",
+            "position": {{ if .Parent }}3{{ else }}2{{ end }},
+            "name": {{ (i18n "projects_title" | default "Projects") | jsonify }},
+            "item": {{ ("/projects/" | relLangURL) | jsonify }}
+        }
+        {{- end }}
+        ,{
+            "@type": "ListItem",
+            "position": {{ if .Parent }}{{ if or (eq .Section "posts") (eq .Section "projects") }}4{{ else }}3{{ end }}{{ else }}{{ if or (eq .Section "posts") (eq .Section "projects") }}3{{ else }}2{{ end }}{{ end }},
+            "name": {{ .Title | jsonify }},
+            "item": {{ .Permalink | jsonify }}
+        }
+    ]
+}
+</script>
+{{- end }}

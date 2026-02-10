@@ -1,0 +1,88 @@
+{{ define "main" }}
+    <article class="project-single">
+        <header class="project-header">
+            <h1 class="page-title">{{ .Title }}</h1>
+
+            {{ with .Description }}
+                <p class="page-description">{{ . }}</p>
+            {{ end }}
+
+            {{ with .Params.tags }}
+                <div class="project-meta">
+                    <div class="project-tags">
+                        {{ range . }}
+                            <a href="{{ partial "tag-url.html" . }}" class="project-tag" rel="tag">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+
+            {{ with .Params.links }}
+                <div class="project-links" style="margin-top: 1rem;">
+                    {{ with .demo }}
+                        <a
+                            href="{{ . }}"
+                            class="project-link project-link--primary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {{ partial "icons/external-link.html" }}
+                            <span>{{ i18n "live_demo" | default "Live Demo" }}</span>
+                        </a>
+                    {{ end }}
+                    {{ with .github }}
+                        <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                            {{ partial "icons/github.html" }}
+                            <span>{{ i18n "source_code" | default "Source Code" }}</span>
+                        </a>
+                    {{ end }}
+                    {{ with .deck }}
+                        <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                            {{ partial "icons/presentation.html" }}
+                            <span>{{ i18n "presentation_deck" | default "Presentation Deck" }}</span>
+                        </a>
+                    {{ end }}
+                </div>
+            {{ end }}
+        </header>
+
+        {{ with .Params.image }}
+            <div class="project-cover">
+                <img
+                    src="{{ partial "image-url.html" (dict "path" . "absolute" true) }}"
+                    alt="{{ $.Title | htmlEscape }}"
+                    loading="lazy"
+                />
+            </div>
+        {{ end }}
+
+
+        <div class="project-body">
+            {{ .Content }}
+        </div>
+
+        {{ if or .PrevInSection .NextInSection }}
+            <nav
+                class="pagination-nav pagination-nav--detail"
+                aria-label="{{ i18n "project_navigation" | default "Project navigation" }}"
+            >
+                {{ with .PrevInSection }}
+                    <a href="{{ .RelPermalink }}" class="pagination-nav__link pagination-nav__link--prev">
+                        <span class="pagination-nav__label">{{ i18n "prev_project" | default "Previous" }}</span>
+                        <span class="pagination-nav__title">{{ .Title }}</span>
+                    </a>
+                {{ else }}
+                    <span class="pagination-nav__link pagination-nav__link--empty"></span>
+                {{ end }}
+                {{ with .NextInSection }}
+                    <a href="{{ .RelPermalink }}" class="pagination-nav__link pagination-nav__link--next">
+                        <span class="pagination-nav__label">{{ i18n "next_project" | default "Next" }}</span>
+                        <span class="pagination-nav__title">{{ .Title }}</span>
+                    </a>
+                {{ else }}
+                    <span class="pagination-nav__link pagination-nav__link--empty"></span>
+                {{ end }}
+            </nav>
+        {{ end }}
+    </article>
+{{ end }}

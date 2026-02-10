@@ -1,0 +1,72 @@
+{{ define "main" }}
+    {{ $termSlug := .Data.Term }}
+    {{ $pages := .Pages }}
+    {{ if not $pages }}
+        {{ with index site.Taxonomies .Data.Plural }}
+            {{ with index . $termSlug }}
+                {{ $pages = where .Pages "Lang" $.Site.Language.Lang }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+    {{ if not $pages }}
+        {{ $collected := slice }}
+        {{ range $p := where site.RegularPages "Lang" .Site.Language.Lang }}
+            {{ range $p.Param "tags" }}
+                {{ if eq (urlize .) $termSlug }}
+                    {{ $collected = $collected | append $p }}
+                    {{ break }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ $pages = $collected }}
+    {{ end }}
+
+
+    <div class="page-header">
+        <span class="tag-label">{{ i18n "tag_label" | default "Tag" }}</span>
+        <h1 class="page-title">#{{ .Title | htmlEscape }}</h1>
+        <p class="page-description">{{ len $pages }} {{ i18n "posts_with_tag" | default "posts with this tag" }}</p>
+    </div>
+
+    {{ $paginator := .Paginate $pages }}
+    {{ $pageList := $paginator.Pages }}
+    {{ if $pageList }}
+        <div class="taxonomy-list">
+            {{ range $pageList.ByDate.Reverse }}
+                {{ $pageURL := .RelPermalink }}
+                {{ $pageTitle := .Title }}
+                <article class="taxonomy-item">
+                    <div class="taxonomy-item__content">
+                        {{ if eq .Section "projects" }}
+                            <span class="taxonomy-item__type taxonomy-item__type--project"
+                                >{{ i18n "project" | default "Project" }}</span
+                            >
+                        {{ else }}
+                            <span class="taxonomy-item__type taxonomy-item__type--post"
+                                >{{ i18n "post" | default "Post" }}</span
+                            >
+                        {{ end }}
+                        <h3 class="taxonomy-item__title">
+                            <a href="{{ $pageURL }}">{{ $pageTitle | htmlEscape }}</a>
+                        </h3>
+                        {{ with .Description }}
+                            <p class="taxonomy-item__desc">{{ . | plainify | htmlEscape }}</p>
+                        {{ end }}
+                        <div class="taxonomy-item__meta">
+                            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+                            {{ if eq .Section "posts" }}
+                                <span>·</span>
+                                <span>{{ .ReadingTime }} {{ i18n "min_read" | default "min read" }}</span>
+                            {{ end }}
+                        </div>
+                    </div>
+                </article>
+            {{ end }}
+        </div>
+        {{ partial "pagination.html" $paginator }}
+    {{ else }}
+        <div class="empty-state">
+            <p>{{ i18n "no_posts" | default "No content yet." }}</p>
+        </div>
+    {{ end }}
+{{ end }}

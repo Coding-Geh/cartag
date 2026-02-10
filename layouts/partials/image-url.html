@@ -1,0 +1,30 @@
+{{/* Resolves image URL with CDN support.
+    - Full URL (http/https): returned as-is.
+    - If params.images.cdnBase is set: relative path becomes cdnBase + path.
+    - Otherwise: relURL or absURL (when absolute: true).
+    Input: string path, or dict with "path" and optional "absolute" (bool).
+*/}}
+{{- $path := . -}}
+{{- $absolute := false -}}
+{{- if reflect.IsMap . -}}
+    {{- $path = .path -}}
+    {{- $absolute = .absolute | default false -}}
+{{- end -}}
+{{- $path = $path | strings.TrimSpace -}}
+{{- $out := "" -}}
+{{- if not $path -}}
+    {{- $out = "" -}}
+{{- else if or (hasPrefix $path "http://") (hasPrefix $path "https://") -}}
+    {{- $out = $path -}}
+{{- else if site.Params.images.cdnBase -}}
+    {{- $base := strings.TrimSuffix "/" site.Params.images.cdnBase -}}
+    {{- $path = strings.TrimPrefix "/" $path -}}
+    {{- $out = printf "%s/%s" $base $path -}}
+{{- else -}}
+    {{- if $absolute -}}
+        {{- $out = $path | absURL -}}
+    {{- else -}}
+        {{- $out = $path | relURL -}}
+    {{- end -}}
+{{- end -}}
+{{- $out -}}

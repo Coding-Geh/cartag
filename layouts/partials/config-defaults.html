@@ -1,0 +1,18 @@
+{{- $defaults := dict
+    "metaDescriptionLength" (site.Params.seo.metaDescriptionLength | default 160)
+    "ogDescriptionLength" (site.Params.seo.ogDescriptionLength | default 200)
+    "searchIndexDescriptionLength" (site.Params.seo.searchIndexDescriptionLength | default 160)
+    "searchIndexContentLength" (site.Params.seo.searchIndexContentLength | default 200)
+    "articleTagLimit" (site.Params.seo.articleTagLimit | default 5)
+    "searchDebounce" (site.Params.search.debounce | default 150)
+    "searchResultsLimit" (site.Params.search.resultsLimit | default 8)
+    "scrollThreshold" (site.Params.ui.scrollThreshold | default 300)
+    "relatedPostsLimit" (site.Params.blog.relatedPostsLimit | default 3)
+    "tagLimitOnList" (site.Params.blog.tagLimitOnList | default 3)
+    "projectImageWidth" (site.Params.images.projectImageWidth | default 300)
+    "projectImageHeight" (site.Params.images.projectImageHeight | default 180)
+    "fontFamily" (site.Params.typography.fontFamily | default "Inter")
+    "fontWeights" (site.Params.typography.fontWeights | default (slice 400 500 600 700))
+    "fontDisplay" (site.Params.typography.fontDisplay | default "swap")
+-}}
+{{- return $defaults -}}

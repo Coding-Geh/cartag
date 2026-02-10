@@ -1,0 +1,118 @@
+<div class="page-coming-soon">
+    <div class="status-page">
+        <div class="status-icon">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100"
+                height="100"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </div>
+
+        <h1 class="status-title">
+            {{ site.Params.comingSoon.title | default (i18n "coming_soon_title" | default "Coming Soon") }}
+        </h1>
+
+        <p class="status-message">
+            {{- $lang := "en" -}}
+            {{- with .Site.Language }}{{ $lang = .Lang }}{{ end -}}
+            {{- $msg := "" -}}
+            {{- with site.Params.comingSoon.message }}{{ $msg = index . $lang }}{{ end -}}
+            {{- $msg | default (i18n "coming_soon_message" | default "We're working hard to bring you something amazing. Stay tuned for updates!") }}
+        </p>
+
+        {{ if site.Params.comingSoon.launchDate }}
+            <div class="status-countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">{{ i18n "days" | default "Days" }}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">{{ i18n "hours" | default "Hours" }}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">{{ i18n "minutes" | default "Minutes" }}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">{{ i18n "seconds" | default "Seconds" }}</span>
+                </div>
+            </div>
+        {{ end }}
+
+        {{ with site.Params.social }}
+            <div class="status-footer">
+                <div class="status-social">
+                    {{ with .github }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            {{ partial "icons/github.html" }}
+                        </a>
+                    {{ end }}
+                    {{ with .linkedin }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            {{ partial "icons/linkedin.html" }}
+                        </a>
+                    {{ end }}
+                    {{ with .twitter }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            {{ partial "icons/twitter.html" }}
+                        </a>
+                    {{ end }}
+                    {{ with .email }}
+                        <a href="mailto:{{ . }}" aria-label="Email">
+                            {{ partial "icons/mail.html" }}
+                        </a>
+                    {{ end }}
+                </div>
+            </div>
+        {{ end }}
+    </div>
+
+    {{ with site.Params.comingSoon.launchDate }}
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            var launchDate = new Date("{{ . }}").getTime();
+
+            function updateCountdown() {
+                var now = new Date().getTime();
+                var distance = launchDate - now;
+
+                if (distance > 0) {
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                }
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+    </script>
+    {{ else }}
+        <script>
+            (function () {
+                var savedTheme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            })();
+        </script>
+    {{ end }}
+</div>

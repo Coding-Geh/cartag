@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}" data-theme="light">
+    <head>
+        {{- partial "head.html" . -}}
+    </head>
+
+    <body class="page-404">
+        <div class="status-page">
+            <div class="status-icon">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="120"
+                    height="120"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+            </div>
+
+            <h1 class="status-code">404</h1>
+            <h2 class="status-title">{{ i18n "page_not_found" | default "Page Not Found" }}</h2>
+            <p class="status-message">
+                {{ i18n "page_not_found_message" | default "Oops! The page you're looking for doesn't exist or has been moved." }}
+            </p>
+
+            <div class="status-actions">
+                <a href="{{ "/" | relLangURL }}" class="status-btn status-btn--primary">
+                    {{ partial "icons/home.html" }}
+                    <span>{{ i18n "back_to_home" | default "Back to Home" }}</span>
+                </a>
+                <button onclick="history.back()" class="status-btn status-btn--secondary">
+                    {{ partial "icons/arrow-right.html" }}
+                    <span>{{ i18n "go_back" | default "Go Back" }}</span>
+                </button>
+            </div>
+
+            {{ with site.Params.social }}
+                <div class="status-footer">
+                    <div class="status-social">
+                        {{ with .github }}
+                            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                                {{ partial "icons/github.html" }}
+                            </a>
+                        {{ end }}
+                        {{ with .linkedin }}
+                            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                {{ partial "icons/linkedin.html" }}
+                            </a>
+                        {{ end }}
+                        {{ with .twitter }}
+                            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                                {{ partial "icons/twitter.html" }}
+                            </a>
+                        {{ end }}
+                        {{ with .email }}
+                            <a href="mailto:{{ . }}" aria-label="Email">
+                                {{ partial "icons/mail.html" }}
+                            </a>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+        </div>
+
+        <script>
+            (function () {
+                const saved = localStorage.getItem('cartag-theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            })();
+        </script>
+    </body>
+</html>

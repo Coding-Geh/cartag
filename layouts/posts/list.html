@@ -1,0 +1,91 @@
+{{ define "main" }}
+    {{- $config := partial "config-defaults.html" . -}}
+    {{- $tagLimit := site.Params.blog.tagLimitOnList | default $config.tagLimitOnList -}}
+
+    {{ if site.Params.blog.showListHeader | default false }}
+        <div class="page-header">
+            <h1 class="page-title">{{ i18n "blog_title" | default "Blog" }}</h1>
+            <p class="page-description">{{ i18n "blog_description" | default "Thoughts, tutorials, and insights" }}</p>
+        </div>
+    {{ end }}
+
+    {{ $layout := site.Params.blog.layout | default "list" }}
+    {{ $sorted := .RegularPages.ByDate.Reverse }}
+    {{ $paginator := .Paginate $sorted }}
+    {{ $posts := $paginator.Pages }}
+
+    {{ if $posts }}
+        <div class="posts-{{ $layout }}">
+            {{ range $posts.ByDate.Reverse }}
+                {{ $post := . }}
+                {{ $postURL := $post.RelPermalink }}
+                {{ $postTitle := $post.Title }}
+                <article class="post-card">
+                    {{ if $post.Params.image }}
+                        <div class="post-image">
+                            <a href="{{ $postURL }}" aria-label="{{ $postTitle | htmlEscape }}">
+                                <img
+                                    src="{{ partial "image-url.html" (dict "path" $post.Params.image "absolute" true) }}"
+                                    alt="{{ $postTitle | htmlEscape }}"
+                                    loading="lazy"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                />
+                                <span class="post-image-placeholder" style="display:none;" aria-hidden="true"
+                                    >{{ partial "icons/image.html" }}</span
+                                >
+                            </a>
+                        </div>
+                    {{ else }}
+                        <div class="post-image">
+                            <a
+                                href="{{ $postURL }}"
+                                class="post-image-placeholder"
+                                aria-label="{{ $postTitle | htmlEscape }}"
+                            >
+                                {{ partial "icons/image.html" }}
+                            </a>
+                        </div>
+                    {{ end }}
+                    <div class="post-content">
+                        {{ if or (site.Params.blog.showDateOnList | default false) (site.Params.blog.showReadTimeOnList | default false) }}
+                            <div class="post-meta">
+                                {{ if site.Params.blog.showDateOnList | default false }}
+                                    <time datetime="{{ $post.Date.Format "2006-01-02" }}"
+                                        >{{ $post.Date.Format "Jan 2, 2006" }}</time
+                                    >
+                                {{ end }}
+                                {{ if and (site.Params.blog.showDateOnList | default false) (site.Params.blog.showReadTimeOnList | default false) }}
+                                    <span class="post-meta__dot">·</span>
+                                {{ end }}
+                                {{ if site.Params.blog.showReadTimeOnList | default false }}
+                                    <span class="post-read-time"
+                                        >{{ $post.ReadingTime }} {{ i18n "min_read" | default "min read" }}</span
+                                    >
+                                {{ end }}
+                            </div>
+                        {{ end }}
+                        <h2 class="post-title">
+                            <a href="{{ $postURL }}">{{ $postTitle | htmlEscape }}</a>
+                        </h2>
+                        {{ if and (site.Params.blog.showExcerptOnList | default false) $post.Description }}
+                            <p class="post-excerpt">{{ $post.Description | plainify | htmlEscape }}</p>
+                        {{ end }}
+                        {{ with $post.Params.tags }}
+                            <div class="post-tags">
+                                {{ range first $tagLimit . }}
+                                    <a href="{{ partial "tag-url.html" . }}" class="post-tag" rel="tag">{{ . }}</a>
+                                {{ end }}
+                            </div>
+                        {{ end }}
+                    </div>
+                </article>
+            {{ end }}
+        </div>
+        {{ partial "pagination.html" $paginator }}
+    {{ else }}
+        <div class="empty-state">
+            {{ partial "icons/edit.html" }}
+            <p>{{ i18n "no_posts" | default "No posts yet." }}</p>
+        </div>
+    {{ end }}
+{{ end }}

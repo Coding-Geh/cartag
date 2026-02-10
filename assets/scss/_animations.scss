@@ -1,0 +1,180 @@
+/* stylelint-disable keyframes-name-pattern */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* stylelint-enable keyframes-name-pattern */
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.6s ease-out,
+        transform 0.6s ease-out;
+
+    &.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal-delay-1 {
+    transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+    transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+    transition-delay: 0.3s;
+}
+
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease !important;
+}
+
+.hover-lift {
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--card-shadow-hover);
+    }
+}
+
+.hover-scale {
+    transition: transform var(--transition-fast);
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.hover-glow {
+    transition: box-shadow var(--transition-fast);
+
+    &:hover {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-bg-secondary) 25%,
+        var(--color-border) 50%,
+        var(--color-bg-secondary) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+
+    &--title {
+        height: 1.5em;
+        width: 60%;
+    }
+
+    &--subtitle {
+        width: 40%;
+    }
+}
+
+.skeleton-image {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+.img-lazy {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+
+    &.loaded {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+.stagger-children {
+    > * {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInUp 0.4s ease forwards;
+    }
+
+    @for $i from 1 through 10 {
+        > *:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.05}s;
+        }
+    }
+}

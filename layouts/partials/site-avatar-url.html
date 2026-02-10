@@ -1,0 +1,18 @@
+{{/* Returns the URL for site avatar (and favicon).
+    When params.images.useCDN is true and params.images.avatarCDN is set, uses CDN URL.
+    Otherwise uses params.avatar (local path) via image-url partial.
+*/}}
+{{- $useCDN := site.Params.images.useCDN | default false -}}
+{{- $cdnURL := site.Params.images.avatarCDN | default "" | strings.TrimSpace -}}
+{{- $localPath := site.Params.avatar | default "" | strings.TrimSpace -}}
+{{- $out := "" -}}
+{{- if and $useCDN $cdnURL -}}
+    {{- $out = $cdnURL -}}
+{{- else if $localPath -}}
+    {{- if or (hasPrefix $localPath "http://") (hasPrefix $localPath "https://") -}}
+        {{- $out = $localPath -}}
+    {{- else -}}
+        {{- $out = partial "image-url.html" (dict "path" $localPath "absolute" true) -}}
+    {{- end -}}
+{{- end -}}
+{{- $out -}}

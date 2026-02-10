@@ -5,31 +5,28 @@
 {{- $useGoogleFonts := site.Params.typography.useGoogleFonts | default true -}}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta
-    name="description"
-    content="{{ with .Description }}
+<meta name="description" content="{{ with .Description }}
         {{ . | plainify | htmlEscape | truncate $config.metaDescriptionLength }}
     {{ else }}
         {{ site.Params.description | htmlEscape }}
-    {{ end }}"
-/>
+    {{ end }}" />
 <meta name="author" content="{{ site.Params.author | htmlEscape }}" />
 <meta name="generator" content="Hugo {{ hugo.Version }} with CartaG Theme" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<meta name="theme-color" content="{{ site.Params.colorScheme.primary | default "#007acc" }}" />
-<meta name="msapplication-TileColor" content="{{ site.Params.colorScheme.primary | default "#007acc" }}" />
+<meta name="theme-color" content="{{ site.Params.colorScheme.primary | default " #007acc" }}" />
+<meta name="msapplication-TileColor" content="{{ site.Params.colorScheme.primary | default " #007acc" }}" />
 {{ if .IsPage }}
-    <meta name="article:author" content="{{ site.Params.author | htmlEscape }}" />
-    {{ with .Params.tags }}
-        <meta name="article:section" content="{{ index . 0 | htmlEscape }}" />
-    {{ end }}
+<meta name="article:author" content="{{ site.Params.author | htmlEscape }}" />
+{{ with .Params.tags }}
+<meta name="article:section" content="{{ index . 0 | htmlEscape }}" />
+{{ end }}
 {{ end }}
 {{ with .Keywords }}
-    <meta name="keywords" content="{{ delimit . ", " }}" />
+<meta name="keywords" content="{{ delimit . " , " }}" />
 {{ end }}
 {{ with .Params.tags }}
-    <meta name="keywords" content="{{ delimit . ", " }}" />
+<meta name="keywords" content="{{ delimit . " , " }}" />
 {{ end }}
 <link rel="canonical" href="{{ .Permalink }}" />
 
@@ -38,44 +35,46 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="dns-prefetch" href="//fonts.googleapis.com" />
 
-{{/* Security headers - Note: X-Frame-Options and X-Content-Type-Options should be set via HTTP headers, not meta tags */}}
+{{/* Security headers - Note: X-Frame-Options and X-Content-Type-Options should be set via HTTP headers, not meta tags
+*/}}
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 
 {{ if hugo.IsMultilingual }}
-    {{ range .AllTranslations }}
-        <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}" />
-    {{ end }}
-    {{/* x-default should point to the default language version */}}
-    {{ $defaultLang := site.LanguageCode | default "en" }}
-    {{ range .AllTranslations }}
-        {{ if eq .Lang $defaultLang }}
-            <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}" />
-        {{ end }}
-    {{ end }}
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}" />
+{{ end }}
+{{/* x-default should point to the default language version */}}
+{{ $defaultLang := site.LanguageCode | default "en" }}
+{{ range .AllTranslations }}
+{{ if eq .Lang $defaultLang }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}" />
+{{ end }}
+{{ end }}
 {{ end }}
 
 
 <title>
     {{ if .IsHome }}
-        {{ site.Title | htmlEscape }}
+    {{ site.Title | htmlEscape }}
     {{ else }}
-        {{ .Title | htmlEscape }} |
-        {{ site.Title | htmlEscape }}
+    {{ .Title | htmlEscape }} |
+    {{ site.Title | htmlEscape }}
     {{ end }}
 
 </title>
 
 {{ $faviconURL := partial "site-avatar-url.html" . }}
 {{ if $faviconURL }}
-    <link rel="icon" href="{{ $faviconURL }}" type="image/x-icon" />
+<link rel="icon" href="{{ $faviconURL }}" type="image/x-icon" />
 {{ end }}
 
-{{- $fontUrl := printf "https://fonts.googleapis.com/css2?family=%s:wght@%s&display=%s" $fontFamily (delimit $fontWeights ";") $fontDisplay -}}
+{{- $fontUrl := printf "https://fonts.googleapis.com/css2?family=%s:wght@%s&display=%s" $fontFamily (delimit
+$fontWeights ";") $fontDisplay -}}
 {{- if $useGoogleFonts }}
-    <link href="{{ $fontUrl }}" rel="stylesheet" />
+<link href="{{ $fontUrl }}" rel="stylesheet" />
 {{- end }}
 
-{{ $options := dict "targetPath" "css/main.css" "outputStyle" "compressed" }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/main.css" "outputStyle" "compressed" }}
 {{ $style := resources.Get "scss/main.scss" | css.Sass $options }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
 
@@ -97,70 +96,58 @@
 </script>
 
 <meta property="og:title" content="{{ .Title | htmlEscape }}" />
-<meta
-    property="og:description"
-    content="{{ with .Description }}
+<meta property="og:description" content="{{ with .Description }}
         {{ . | plainify | htmlEscape | truncate $config.ogDescriptionLength }}
     {{ else }}
         {{ site.Params.description | htmlEscape }}
-    {{ end }}"
-/>
-<meta
-    property="og:type"
-    content="{{ if .IsPage }}
-        {{ if eq .Section "posts" }}article{{ else }}website{{ end }}
-    {{ else }}
-        website
-    {{ end }}"
-/>
+    {{ end }}" />
+<meta property="og:type" content="{{ if .IsPage }}
+        {{ if eq .Section " posts" }}article{{ else }}website{{ end }} {{ else }} website {{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
 <meta property="og:site_name" content="{{ site.Title | htmlEscape }}" />
 {{- $ogImage := .Params.image | default "" -}}
 {{- $ogImageURL := "" -}}
 {{- if $ogImage }}
-    {{ $ogImageURL = partial "image-url.html" (dict "path" $ogImage "absolute" true) }}
+{{ $ogImageURL = partial "image-url.html" (dict "path" $ogImage "absolute" true) }}
 {{ else }}
-    {{ $ogImageURL = partial "site-avatar-url.html" . }}
+{{ $ogImageURL = partial "site-avatar-url.html" . }}
 {{ end -}}
 {{ with $ogImage }}
-    <meta property="og:image" content="{{ $ogImageURL }}" />
-    <meta property="og:image:alt" content="{{ $.Title | htmlEscape }}" />
+<meta property="og:image" content="{{ $ogImageURL }}" />
+<meta property="og:image:alt" content="{{ $.Title | htmlEscape }}" />
 {{ end }}
 {{ with .Date }}
-    <meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
+<meta property="article:published_time" content="{{ .Format " 2006-01-02T15:04:05Z07:00" }}" />
 {{ end }}
 {{ with .Lastmod }}
-    <meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />
+<meta property="article:modified_time" content="{{ .Format " 2006-01-02T15:04:05Z07:00" }}" />
 {{ end }}
 {{ with .Params.tags }}
-    {{ range first $config.articleTagLimit . }}
-        <meta property="article:tag" content="{{ . | htmlEscape }}" />
-    {{ end }}
+{{ range first $config.articleTagLimit . }}
+<meta property="article:tag" content="{{ . | htmlEscape }}" />
+{{ end }}
 {{ end }}
 
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ .Title | htmlEscape }}" />
-<meta
-    name="twitter:description"
-    content="{{ with .Description }}
+<meta name="twitter:description" content="{{ with .Description }}
         {{ . | plainify | htmlEscape | truncate $config.ogDescriptionLength }}
     {{ else }}
         {{ site.Params.description | htmlEscape }}
-    {{ end }}"
-/>
+    {{ end }}" />
 {{ with $ogImage }}
-    <meta name="twitter:image" content="{{ $ogImageURL }}" />
-    <meta name="twitter:image:alt" content="{{ $.Title | htmlEscape }}" />
+<meta name="twitter:image" content="{{ $ogImageURL }}" />
+<meta name="twitter:image:alt" content="{{ $.Title | htmlEscape }}" />
 {{ end }}
 {{ with site.Params.social.twitter }}
-    <meta name="twitter:site" content="{{ . }}" />
-    <meta name="twitter:creator" content="{{ . }}" />
+<meta name="twitter:site" content="{{ . }}" />
+<meta name="twitter:creator" content="{{ . }}" />
 {{ end }}
 
 {{- partial "structured-data.html" . -}}
 {{- partial "reading-progress.html" . -}}
 
 {{ with .OutputFormats.Get "RSS" }}
-    <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}" />
 {{ end }}
